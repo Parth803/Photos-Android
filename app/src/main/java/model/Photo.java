@@ -2,6 +2,8 @@ package model;
 
 //import javafx.util.Pair;
 
+import android.util.Pair;
+
 import java.io.File;
 //import java.io.Serial;
 import java.util.ArrayList;
@@ -69,9 +71,10 @@ public final class Photo implements java.io.Serializable, Comparable<Photo> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Photo other)) {
+        if (!(obj instanceof Photo)) {
             return false;
         }
+        Photo other = (Photo) obj;
         return this.path.equals(other.path);
     }
 

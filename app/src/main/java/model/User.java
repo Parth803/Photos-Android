@@ -1,8 +1,10 @@
 package model;
 
-import javafx.util.Pair;
+//import javafx.util.Pair;
 
-import java.io.Serial;
+//import java.io.Serial;
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -16,7 +18,7 @@ public final class User implements java.io.Serializable, Comparable<User> {
     /**
      * unique id for serialization
      */
-    @Serial
+//    @Serial
     private static final long serialVersionUID = -379318737058451008L;
     /**
      * the user's username
@@ -54,9 +56,10 @@ public final class User implements java.io.Serializable, Comparable<User> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof User other)) {
+        if (!(obj instanceof User)) {
             return false;
         }
+        User other = (User) obj;
         return this.username.equals(other.username);
     }
 
@@ -85,7 +88,7 @@ public final class User implements java.io.Serializable, Comparable<User> {
     public void addToTagPreset(String type, boolean isSingle) throws Exception {
         String property = isSingle ? "single" : "multiple";
         for (Pair<String, String> p : this.tagPreset) {
-            if (p.getKey().equals(type)) {
+            if (p.first.equals(type)) {
                 throw new Exception("tag already exists in preset");
             }
         }
@@ -100,8 +103,8 @@ public final class User implements java.io.Serializable, Comparable<User> {
      */
     public String getTagProperty(String type) throws Exception {
         for (Pair<String, String> p : this.tagPreset) {
-            if (p.getKey().equals(type)) {
-                return p.getValue();
+            if (p.first.equals(type)) {
+                return p.second;
             }
         }
         throw new Exception("could not get property because tag is not in preset");
