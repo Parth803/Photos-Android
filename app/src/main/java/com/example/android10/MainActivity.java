@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
+import adapter.Albums;
 import model.Album;
 import model.Model;
 
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.albums);
 
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         albums.add(new Album("Gay = Happy"));
 
         // Create adapter passing in the sample user data
-        AlbumsAdapter adapter = new AlbumsAdapter(albums);
+        Albums adapter = new Albums(albums);
 
         rvContacts.setAdapter(adapter);
 

@@ -1,4 +1,4 @@
-package com.example.android10;
+package adapter;
 
 import model.Album;
 
@@ -11,12 +11,14 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android10.R;
+
 import java.util.ArrayList;
 
 
-// Create the basic adapter extending from RecyclerView.Adapter
+// Create the basic adapter extending from RecyclerView.adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {
+public class Albums extends RecyclerView.Adapter<Albums.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,13 +37,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
     private ArrayList<Album> userAlbums;
 
-    public AlbumsAdapter(ArrayList<Album> albums) {
+    public Albums(ArrayList<Album> albums) {
         userAlbums = albums;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
-    public AlbumsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Albums.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -55,7 +57,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(AlbumsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(Albums.ViewHolder holder, int position) {
         // Get the data model based on position
         Album album = userAlbums.get(position);
 
