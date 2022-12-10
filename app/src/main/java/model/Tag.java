@@ -1,6 +1,6 @@
 package model;
 
-import java.io.Serial;
+//import java.io.Serial;
 
 /**
  * class for tags
@@ -10,7 +10,7 @@ public final class Tag implements java.io.Serializable, Comparable<Tag> {
     /**
      * unique id for serialization
      */
-    @Serial
+//    @Serial
     private static final long serialVersionUID = -6115814363901437624L;
     /**
      * tagType

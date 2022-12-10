@@ -69,9 +69,10 @@ public final class Album implements java.io.Serializable, Comparable<Album> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Album other)) {
+        if (!(obj instanceof Album)) {
             return false;
         }
+        Album other = (Album) obj;
         return this.name.equals(other.name);
     }
 
