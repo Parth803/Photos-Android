@@ -25,4 +25,11 @@
         android:text="@string/open"
         android:textSize="20sp" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/actionOverflowButtonStyle"
+        android:onClick="showPopup" />
+
+
 </LinearLayout>
