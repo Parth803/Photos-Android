@@ -38,9 +38,10 @@ public final class Tag implements java.io.Serializable, Comparable<Tag> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Tag other)) {
+        if (!(obj instanceof Tag)) {
             return false;
         }
+        Tag other = (Tag) obj;
         return this.type.equals(other.type) && this.value.equals(other.value);
     }
 
