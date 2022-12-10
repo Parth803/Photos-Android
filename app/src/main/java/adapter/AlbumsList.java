@@ -3,10 +3,12 @@ package adapter;
 import model.Album;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +26,7 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
         public TextView albumNameTextView;
         public Button openAlbumButton;
-
+        public ImageButton renameOrDeleteAlbumButton;
 
         public ViewHolder(View itemView) {
 
@@ -32,7 +34,29 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
             albumNameTextView = (TextView) itemView.findViewById(R.id.albumNameTextView);
             openAlbumButton = (Button) itemView.findViewById(R.id.openAlbumButton);
+            openAlbumButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    open(itemView);
+                }
+            });
+            renameOrDeleteAlbumButton = (ImageButton) itemView.findViewById(R.id.renameOrDeleteAlbumButton);
+            renameOrDeleteAlbumButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPopup(itemView);
+                }
+            });
+
         }
+    }
+
+    public void open(View view) {
+        // NAVIGATE TO NEXT VIEW BY CALLING CHANGE VIEW FUNCTION IN MAIN
+    }
+
+    public void showPopup(View view) {
+        // OPEN DA POPUP -- WORK IN PROGRESS
     }
 
     private ArrayList<Album> userAlbums;
