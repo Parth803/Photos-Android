@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 // Create the basic adapter extending from RecyclerView.adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class Albums extends RecyclerView.Adapter<Albums.ViewHolder> {
+public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,13 +37,13 @@ public class Albums extends RecyclerView.Adapter<Albums.ViewHolder> {
 
     private ArrayList<Album> userAlbums;
 
-    public Albums(ArrayList<Album> albums) {
+    public AlbumsList(ArrayList<Album> albums) {
         userAlbums = albums;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
-    public Albums.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AlbumsList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -57,7 +57,7 @@ public class Albums extends RecyclerView.Adapter<Albums.ViewHolder> {
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(Albums.ViewHolder holder, int position) {
+    public void onBindViewHolder(AlbumsList.ViewHolder holder, int position) {
         // Get the data model based on position
         Album album = userAlbums.get(position);
 

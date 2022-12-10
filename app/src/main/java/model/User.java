@@ -25,7 +25,7 @@ public final class User implements java.io.Serializable, Comparable<User> {
      */
     public String username;
     /**
-     * the user's albums
+     * the user's albumslist
      */
     public ArrayList<Album> albums;
     /**

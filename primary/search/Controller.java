@@ -109,7 +109,7 @@ public class Controller {
 
         this.back.setOnAction(actionEvent -> {
             Model.initPreviousScene();
-            Photos.changeScene("primary", "/stages/primary/albums/albums.fxml");
+            Photos.changeScene("primary", "/stages/primary/albumslist/albumslist.fxml");
         });
         this.logout.setOnAction(actionEvent -> Photos.changeScene("primary", "/stages/primary/main/main.fxml"));
         this.search.setOnAction(actionEvent -> searchPhotos());

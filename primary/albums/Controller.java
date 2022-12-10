@@ -17,7 +17,7 @@ import photos.Photos;
 import java.text.SimpleDateFormat;
 
 /**
- * controller for the albums scene
+ * controller for the albumslist scene
  * @author Parth Patel, Yash Patel
  */
 public class Controller {
@@ -27,7 +27,7 @@ public class Controller {
     @FXML
     private Button rename;
     /**
-     * tilepane for the albums
+     * tilepane for the albumslist
      */
     @FXML
     private TilePane albumsPane;
@@ -120,7 +120,7 @@ public class Controller {
     private boolean renameAllowed;
 
     /**
-     * initialize albums scene
+     * initialize albumslist scene
      */
     public void initialize() {
         if (!Model.dataTransfer.isEmpty()) {
@@ -145,7 +145,7 @@ public class Controller {
     }
 
     /**
-     * create the albums thumbnails
+     * create the albumslist thumbnails
      */
     public void createElements() {
         albumsPane.getChildren().clear();

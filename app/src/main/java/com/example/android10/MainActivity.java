@@ -6,30 +6,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import java.util.ArrayList;
-
-import adapter.Albums;
-import model.Album;
+import adapter.AlbumsList;
 import model.Model;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Model.init();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.albums);
+        setContentView(R.layout.albumslist);
 
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
 
-        // get albums from storage
-        ArrayList<Album> albums = Model.currentUser.albums;
-        albums.add(new Album("Gay = Happy"));
-
         // Create adapter passing in the sample user data
-        Albums adapter = new Albums(albums);
+        AlbumsList adapter = new AlbumsList(Model.currentUser.albums);
 
         rvContacts.setAdapter(adapter);
 
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
     }
 }
+

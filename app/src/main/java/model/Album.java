@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 /**
- * Class for albums
+ * Class for albumslist
  * @author Parth Patel, Yash Patel
  */
 public final class Album implements java.io.Serializable, Comparable<Album> {
@@ -63,9 +63,9 @@ public final class Album implements java.io.Serializable, Comparable<Album> {
     }
 
     /**
-     * checks if two albums are equal
+     * checks if two albumslist are equal
      * @param obj object to compare album with
-     * @return if albums are equal
+     * @return if albumslist are equal
      */
     @Override
     public boolean equals(Object obj) {
@@ -79,7 +79,7 @@ public final class Album implements java.io.Serializable, Comparable<Album> {
     /**
      * compares one album with another
      * @param other the object to be compared.
-     * @return value to represent order of albums
+     * @return value to represent order of albumslist
      */
     public int compareTo(Album other) {
         if (this.equals(other)) {

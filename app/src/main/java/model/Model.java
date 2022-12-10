@@ -44,7 +44,6 @@ public final class Model {
         File serializedUsers = new File(path);
         if (serializedUsers.length() == 0) {
             users = new ArrayList<>();
-            users.add(new User("admin"));
             users.add(new User("stock"));
             try {
                 setCurrentUser("stock");
@@ -78,9 +77,13 @@ public final class Model {
                 ObjectInputStream input = new ObjectInputStream(file);
                 users = (ArrayList<User>) input.readObject();
                 if (users.size() == 0) {
-                    users.add(new User("admin"));
+                    users.add(new User("stock"));
                 }
-                currentUser = users.get(0);
+                try {
+                    setCurrentUser("stock");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 input.close();
                 file.close();
             } catch (Exception e) {
