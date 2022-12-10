@@ -9,16 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class HomeAdapter extends
-        RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,15 +33,15 @@ public class HomeAdapter extends
         }
     }
 
-    private List<Album> userAlbums;
+    private ArrayList<Album> userAlbums;
 
-    public HomeAdapter(List<Album> albums) {
+    public AlbumsAdapter(ArrayList<Album> albums) {
         userAlbums = albums;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
-    public HomeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AlbumsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -57,7 +55,7 @@ public class HomeAdapter extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(HomeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(AlbumsAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
         Album album = userAlbums.get(position);
 

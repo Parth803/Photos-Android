@@ -9,10 +9,9 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 import model.Album;
+import model.Model;
 
 public class MainActivity extends AppCompatActivity {
-
-    ArrayList<Album> albums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
 
         // get albums from storage
-        albums = new ArrayList<Album>();
+        ArrayList<Album> albums = Model.currentUser.albums;
         albums.add(new Album("Gay = Happy"));
 
         // Create adapter passing in the sample user data
-        HomeAdapter adapter = new HomeAdapter(albums);
+        AlbumsAdapter adapter = new AlbumsAdapter(albums);
 
         rvContacts.setAdapter(adapter);
 
