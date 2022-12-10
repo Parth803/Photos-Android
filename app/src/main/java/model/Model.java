@@ -1,6 +1,6 @@
 package model;
 
-import photos.Photos;
+//import photos.Photos;
 
 import java.io.*;
 import java.util.ArrayDeque;
@@ -174,7 +174,7 @@ public final class Model {
     public static void logOut() {
         dataSnapshots.clear();
         dataTransfer.clear();
-        Photos.closeViewPhotoStage();
+//        Photos.closeViewPhotoStage();
     }
 }
 
