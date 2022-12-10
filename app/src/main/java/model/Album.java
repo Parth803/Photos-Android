@@ -1,6 +1,6 @@
 package model;
 
-import java.io.Serial;
+//import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -13,7 +13,7 @@ public final class Album implements java.io.Serializable, Comparable<Album> {
     /**
      * unique ID for serialization
      */
-    @Serial
+//    @Serial
     private static final long serialVersionUID = -2523531824640650719L;
     /**
      * name of album
