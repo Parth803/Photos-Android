@@ -53,7 +53,6 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
     }
 
     public void showPopup(View view, String albumName) {
-        // OPEN DA POPUP -- WORK IN PROGRESS
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
         popup.setOnMenuItemClickListener(item -> {
