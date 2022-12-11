@@ -9,7 +9,7 @@ import android.os.Bundle;
 import adapter.AlbumsList;
 import model.Model;
 
-public class MainActivity extends AppCompatActivity {
+public class AlbumsListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.albumslist);
 
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
+        RecyclerView rvContacts = findViewById(R.id.rvContacts);
 
         // Create adapter passing in the sample user data
         AlbumsList adapter = new AlbumsList(Model.currentUser.albums);
