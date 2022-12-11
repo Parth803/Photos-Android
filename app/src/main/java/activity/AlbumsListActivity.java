@@ -1,4 +1,4 @@
-package com.example.android10;
+package activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,20 +10,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import model.Album;
+import com.example.android10.R;
+
 import adapter.AlbumsListAdapter;
 import model.Model;
-import activity.SearchActivity;
 
-public class MainAlbumsListActivity extends AppCompatActivity {
+public class AlbumsListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Model.init();
         try {
             Model.currentUser.albums.get(0).photos.get(0).addTag("location", "new york");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("can not add example tag to first photo");
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.albumslist);

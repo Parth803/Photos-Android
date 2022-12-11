@@ -69,7 +69,6 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
         inflater.inflate(R.menu.deleteaction, popup.getMenu());
         popup.show();
         // gotta call function to re-fresh the albums list after deleting
-        // gotta make the album_card part of a list, cause right now its just one thing
     }
 
     private final ArrayList<Album> userAlbums;

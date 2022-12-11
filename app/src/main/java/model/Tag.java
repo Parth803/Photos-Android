@@ -2,7 +2,6 @@ package model;
 
 //import java.io.Serial;
 
-import java.util.Locale;
 
 /**
  * class for tags
@@ -63,4 +62,5 @@ public final class Tag implements java.io.Serializable, Comparable<Tag> {
         }
     }
 }
+
 
