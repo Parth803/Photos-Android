@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,10 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         {
             imageView.setImageURI(Uri.fromFile(imgFile));
         }
+        // this is how to convert Uri to Path and convert a path back to Uri
+        // so that we can keep all the code the same without any headaches
+        // photo.path = Intent.getData().toString();
+        // Uri imageUri = Uri.parse(photo.path);
 
         return singlePhoto;
     }
