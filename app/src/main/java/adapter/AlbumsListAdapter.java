@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android10.PhotosListActivity;
+import activity.PhotosListActivity;
 import com.example.android10.R;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 // Create the basic adapter extending from RecyclerView.adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
+public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -72,16 +72,16 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
         // gotta make the album_card part of a list, cause right now its just one thing
     }
 
-    private ArrayList<Album> userAlbums;
+    private final ArrayList<Album> userAlbums;
 
-    public AlbumsList(ArrayList<Album> albums) {
+    public AlbumsListAdapter(ArrayList<Album> albums) {
         userAlbums = albums;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
     @NonNull
     @Override
-    public AlbumsList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AlbumsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -94,7 +94,7 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(AlbumsList.ViewHolder holder, int position) {
+    public void onBindViewHolder(AlbumsListAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
         Album album = userAlbums.get(position);
 

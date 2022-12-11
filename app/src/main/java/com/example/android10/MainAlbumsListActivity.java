@@ -9,14 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-import adapter.AlbumsList;
+import adapter.AlbumsListAdapter;
 import model.Model;
-import com.example.android10.SearchActivity;
+import activity.SearchActivity;
 
-public class AlbumsListActivity extends AppCompatActivity {
+public class MainAlbumsListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +30,7 @@ public class AlbumsListActivity extends AppCompatActivity {
         RecyclerView rvContacts = findViewById(R.id.rvContacts);
 
         // Create adapter passing in the sample user data
-        AlbumsList adapter = new AlbumsList(Model.currentUser.albums);
+        AlbumsListAdapter adapter = new AlbumsListAdapter(Model.currentUser.albums);
 
         rvContacts.setAdapter(adapter);
 
