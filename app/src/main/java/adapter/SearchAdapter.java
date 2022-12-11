@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.android10.R;
 import java.io.File;
 import java.util.ArrayList;
 
+import activity.DisplayActivity;
 import activity.EditActivity;
 import activity.PhotosListActivity;
 import model.Photo;
@@ -49,7 +51,7 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         }
 
         singlePhoto.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), EditActivity.class);
+            Intent intent = new Intent(view.getContext(), DisplayActivity.class);
             view.getContext().startActivity(intent);
         });
         // this is how to convert Uri to Path and convert a path back to Uri
