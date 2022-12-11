@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.example.android10.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import model.Photo;
@@ -36,7 +38,12 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         ImageView imageView = singlePhoto.findViewById(R.id.imageView);
 
         caption.setText(photo.caption);
-        imageView.setImageResource(0);//path needs to be implemented
+
+        File imgFile = new File(photo.path);
+        if(imgFile.exists())
+        {
+            imageView.setImageURI(Uri.fromFile(imgFile));
+        }
 
         return singlePhoto;
     }
