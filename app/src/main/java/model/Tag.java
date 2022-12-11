@@ -2,6 +2,8 @@ package model;
 
 //import java.io.Serial;
 
+import java.util.Locale;
+
 /**
  * class for tags
  * @author Parth Patel, Yash Patel
@@ -42,7 +44,9 @@ public final class Tag implements java.io.Serializable, Comparable<Tag> {
             return false;
         }
         Tag other = (Tag) obj;
-        return this.type.equals(other.type) && this.value.equals(other.value);
+        String thisValue = this.value.toLowerCase(Locale.US);
+        String otherValue = other.value.toLowerCase(Locale.US);
+        return this.type.equalsIgnoreCase(other.type) && otherValue.startsWith(thisValue);
     }
 
     /**
@@ -61,3 +65,4 @@ public final class Tag implements java.io.Serializable, Comparable<Tag> {
         }
     }
 }
+
