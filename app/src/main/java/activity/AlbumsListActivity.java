@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.example.android10.R;
 
 import adapter.AlbumsListAdapter;
+import model.Album;
 import model.Model;
 
 public class AlbumsListActivity extends AppCompatActivity {
