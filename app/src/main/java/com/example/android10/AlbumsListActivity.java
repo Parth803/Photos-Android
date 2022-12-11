@@ -1,17 +1,20 @@
 package com.example.android10;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.CollapsibleActionView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import adapter.AlbumsList;
 import model.Model;
+import com.example.android10.SearchActivity;
 
 public class AlbumsListActivity extends AppCompatActivity {
 
@@ -44,7 +47,10 @@ public class AlbumsListActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 // SEARCH THROUGH USER'S PHOTOS AFTER CHECKING QUERY USING SAME METHOD
                 if (query.isEmpty() || query.matches("^\\d{1,2}/\\d{1,2}/\\d{4} \\d{1,2}:\\d{1,2}:\\d{1,2} TO \\d{1,2}/\\d{1,2}/\\d{4} \\d{1,2}:\\d{1,2}:\\d{1,2}") || query.matches("\\S+=\\S+") || query.matches("\\S+=\\S+ AND \\S+=\\S+") || query.matches("\\S+=\\S+ OR \\S+=\\S+")) {
-                   // Change to search activity
+                    // Change to search activity
+                    Model.dataTransfer.add(query);
+                    Intent intent = new Intent(AlbumsListActivity.this, SearchActivity.class);
+                    AlbumsListActivity.this.startActivity(intent);
                 }
                 return false;
             }
@@ -59,4 +65,3 @@ public class AlbumsListActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 }
-
