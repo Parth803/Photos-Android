@@ -38,7 +38,7 @@ public class SearchActivity extends AppCompatActivity {
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("[MM/DD/YYYY hh:mm:ss TO MM/DD/YYYY hh:mm:ss] or [type=value AND/OR type=value]");
+        searchView.setQueryHint("[type=value AND/OR type=value]");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

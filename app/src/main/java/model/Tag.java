@@ -44,9 +44,7 @@ public final class Tag implements java.io.Serializable, Comparable<Tag> {
             return false;
         }
         Tag other = (Tag) obj;
-        String thisValue = this.value.toLowerCase(Locale.US);
-        String otherValue = other.value.toLowerCase(Locale.US);
-        return this.type.equalsIgnoreCase(other.type) && otherValue.startsWith(thisValue);
+        return this.type.equalsIgnoreCase(other.type) && this.value.equalsIgnoreCase(other.value);
     }
 
     /**
