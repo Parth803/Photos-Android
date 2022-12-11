@@ -17,6 +17,8 @@ import com.example.android10.R;
 import java.io.File;
 import java.util.ArrayList;
 
+import activity.EditActivity;
+import activity.PhotosListActivity;
 import model.Photo;
 
 public class SearchAdapter extends ArrayAdapter<Photo> {
@@ -29,6 +31,7 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View singlePhoto = convertView;
+
         if (singlePhoto == null) {
             singlePhoto = LayoutInflater.from(getContext()).inflate(R.layout.single_photo, parent, false);
         }
@@ -44,6 +47,11 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         {
             imageView.setImageURI(Uri.fromFile(imgFile));
         }
+
+        singlePhoto.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), EditActivity.class);
+            view.getContext().startActivity(intent);
+        });
         // this is how to convert Uri to Path and convert a path back to Uri
         // so that we can keep all the code the same without any headaches
         // photo.path = Intent.getData().toString();
