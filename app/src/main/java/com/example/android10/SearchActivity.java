@@ -12,5 +12,6 @@ public class SearchActivity extends AppCompatActivity {
         Model.init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

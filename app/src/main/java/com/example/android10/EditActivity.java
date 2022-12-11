@@ -12,5 +12,6 @@ public class EditActivity extends AppCompatActivity {
         Model.init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

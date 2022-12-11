@@ -24,11 +24,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".PhotosListActivity" />
+            android:name=".PhotosListActivity"
+            android:parentActivityName=".AlbumsListActivity"/>
         <activity
-            android:name=".EditActivity" />
+            android:name=".EditActivity"
+            android:parentActivityName=".PhotosListActivity"/>
         <activity
-            android:name=".SearchActivity" />
+            android:name=".SearchActivity"
+            android:parentActivityName=".AlbumsListActivity"/>
 
     </application>
 
