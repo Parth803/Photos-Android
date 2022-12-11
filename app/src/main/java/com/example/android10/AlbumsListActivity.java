@@ -21,6 +21,11 @@ public class AlbumsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Model.init();
+        try {
+            Model.currentUser.albums.get(0).photos.get(0).addTag("location", "new york");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.albumslist);
 
