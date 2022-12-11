@@ -22,6 +22,7 @@ public class MainAlbumsListActivity extends AppCompatActivity {
         Model.init();
         try {
             Model.currentUser.albums.get(0).photos.get(0).addTag("location", "new york");
+            Model.currentUser.albums.add(new Album("Mermaid Man"));
         } catch (Exception e) {
             e.printStackTrace();
         }
