@@ -11,7 +11,6 @@ public class PhotosListActivity extends AppCompatActivity {
     Button back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Model.init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photoslist);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

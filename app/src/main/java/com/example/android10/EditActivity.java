@@ -9,7 +9,6 @@ import model.Model;
 public class EditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Model.init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
