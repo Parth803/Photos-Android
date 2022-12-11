@@ -1,4 +1,4 @@
-package com.example.android10;
+package activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import java.util.ArrayList;
+import com.example.android10.R;
+
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +31,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         listOfSearchedPhotos = findViewById(R.id.listOfSearchedPhotos);
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Model.currentUser.getAllPhotos());

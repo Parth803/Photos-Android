@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android10">
         <activity
-            android:name=".AlbumsListActivity"
+            android:name=".MainAlbumsListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +24,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".PhotosListActivity"
-            android:parentActivityName=".AlbumsListActivity"/>
+            android:name="activity.PhotosListActivity"
+            android:parentActivityName=".MainAlbumsListActivity"/>
         <activity
-            android:name=".EditActivity"
-            android:parentActivityName=".PhotosListActivity"/>
+            android:name="activity.EditActivity"
+            android:parentActivityName="activity.PhotosListActivity"/>
         <activity
-            android:name=".SearchActivity"
-            android:parentActivityName=".AlbumsListActivity"/>
+            android:name="activity.SearchActivity"
+            android:parentActivityName=".MainAlbumsListActivity"/>
 
     </application>
 
