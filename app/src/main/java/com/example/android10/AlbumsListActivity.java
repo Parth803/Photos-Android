@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 
 import adapter.AlbumsList;
+import model.Album;
 import model.Model;
 import com.example.android10.SearchActivity;
 

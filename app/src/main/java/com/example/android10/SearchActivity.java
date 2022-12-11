@@ -10,6 +10,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,16 +46,15 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchQuery) {
-                // SEARCH THROUGH USER'S PHOTOS AFTER CHECKING QUERY USING SAME METHOD
+                ArrayList<Photo> filteredPhotos = new ArrayList<Photo>();
                 if (searchQuery.isEmpty()) {
-                    arrayAdapter.getFilter().filter("");
+                    filteredPhotos = Model.currentUser.getAllPhotos();
                 } else if (searchQuery.matches("\\S+=\\S+")) {
                     Pattern p = Pattern.compile("(\\S+)=(\\S+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
-                            arrayAdapter.clear();
-                            arrayAdapter.addAll(Model.currentUser.getPhotosByTag(m.group(1), m.group(2)));
+                            filteredPhotos = Model.currentUser.getPhotosByTag(m.group(1), m.group(2));
                         } catch (Exception e) {
                             throw new RuntimeException("Error parsing searchQuery for a tag");
                         }
@@ -64,8 +64,7 @@ public class SearchActivity extends AppCompatActivity {
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
-                            arrayAdapter.clear();
-                            arrayAdapter.addAll(Model.currentUser.getPhotosByTags(m.group(1), m.group(2), m.group(3),m.group(4), true));
+                            filteredPhotos = Model.currentUser.getPhotosByTags(m.group(1), m.group(2), m.group(3),m.group(4), true);
                         } catch (Exception e) {
                             throw new RuntimeException("Error parsing searchQuery for tags using AND");
                         }
@@ -75,25 +74,58 @@ public class SearchActivity extends AppCompatActivity {
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
-                            arrayAdapter.clear();
-                            arrayAdapter.addAll(Model.currentUser.getPhotosByTags(m.group(1), m.group(2), m.group(3),m.group(4), false));
+                            filteredPhotos = Model.currentUser.getPhotosByTags(m.group(1), m.group(2), m.group(3),m.group(4), false);
                         } catch (Exception e) {
                             throw new RuntimeException("Error parsing searchQuery for tags using OR");
                         }
                     }
                 }
+                arrayAdapter = new ArrayAdapter<Photo>(getApplicationContext(), android.R.layout.simple_list_item_1, filteredPhotos);
+                listOfSearchedPhotos.setAdapter(arrayAdapter);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String searchQuery) {
+                ArrayList<Photo> filteredPhotos = new ArrayList<Photo>();
                 if (searchQuery.isEmpty()) {
-                    arrayAdapter.getFilter().filter("");
+                    filteredPhotos = Model.currentUser.getAllPhotos();
+                } else if (searchQuery.matches("\\S+=\\S+")) {
+                    Pattern p = Pattern.compile("(\\S+)=(\\S+)");
+                    Matcher m = p.matcher(searchQuery);
+                    if (m.find()) {
+                        try {
+                            filteredPhotos = Model.currentUser.getPhotosByTag(m.group(1), m.group(2));
+                        } catch (Exception e) {
+                            throw new RuntimeException("Error parsing searchQuery for a tag");
+                        }
+                    }
+                } else if (searchQuery.matches("\\S+=\\S+ AND \\S+=\\S+")) {
+                    Pattern p = Pattern.compile("(\\S+)=(\\S+) AND (\\S+)=(\\S+)");
+                    Matcher m = p.matcher(searchQuery);
+                    if (m.find()) {
+                        try {
+                            filteredPhotos = Model.currentUser.getPhotosByTags(m.group(1), m.group(2), m.group(3),m.group(4), true);
+                        } catch (Exception e) {
+                            throw new RuntimeException("Error parsing searchQuery for tags using AND");
+                        }
+                    }
+                } else if (searchQuery.matches("\\S+=\\S+ OR \\S+=\\S+")) {
+                    Pattern p = Pattern.compile("(\\S+)=(\\S+) OR (\\S+)=(\\S+)");
+                    Matcher m = p.matcher(searchQuery);
+                    if (m.find()) {
+                        try {
+                            filteredPhotos = Model.currentUser.getPhotosByTags(m.group(1), m.group(2), m.group(3),m.group(4), false);
+                        } catch (Exception e) {
+                            throw new RuntimeException("Error parsing searchQuery for tags using OR");
+                        }
+                    }
                 }
+                arrayAdapter = new ArrayAdapter<Photo>(getApplicationContext(), android.R.layout.simple_list_item_1, filteredPhotos);
+                listOfSearchedPhotos.setAdapter(arrayAdapter);
                 return false;
             }
         });
-
 
         return super.onCreateOptionsMenu(menu);
     }
