@@ -8,6 +8,7 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.function.Predicate;
 
 /**
@@ -194,7 +195,16 @@ public final class User implements java.io.Serializable, Comparable<User> {
      * @return photos filtered by tag
      */
     public ArrayList<Photo> getPhotosByTag(String type, String value) {
-        Predicate<Photo> containsTag = p -> p.tags.contains(new Tag(type, value));
+        Predicate<Photo> containsTag = p -> {
+            for (Tag tag : p.tags) {
+                String elementValue = tag.value.toLowerCase(Locale.US);
+                String thisValue = value.toLowerCase(Locale.US);
+                if (tag.type.equalsIgnoreCase(type) && elementValue.startsWith(thisValue)) {
+                    return true;
+                }
+            }
+            return false;
+        };
         return getPhotos(containsTag);
     }
 
