@@ -46,8 +46,10 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
         }
     }
 
-    public void open(View view, String album) {
+    public void open(View view, String albumName) {
         // NAVIGATE TO NEXT VIEW BY CALLING CHANGE VIEW FUNCTION IN MAIN
+        Model.initNextScene(true);
+        Model.dataTransfer.add(Model.currentUser.albums.get(Model.currentUser.albums.indexOf(new Album(albumName))));
         Intent intent = new Intent(view.getContext(), PhotosListActivity.class);
         view.getContext().startActivity(intent);
     }
