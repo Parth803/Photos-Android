@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,15 +18,16 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import adapter.SearchAdapter;
 import model.Model;
 import model.Photo;
 
 public class SearchActivity extends AppCompatActivity {
 
 
-    ListView listOfSearchedPhotos;
+    GridView listOfSearchedPhotos;
 
-    ArrayAdapter<Photo> arrayAdapter;
+    SearchAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,9 @@ public class SearchActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         listOfSearchedPhotos = findViewById(R.id.listOfSearchedPhotos);
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Model.currentUser.getAllPhotos());
-        listOfSearchedPhotos.setAdapter(arrayAdapter);
+
+        adapter = new SearchAdapter(this, Model.currentUser.getAllPhotos());
+        listOfSearchedPhotos.setAdapter(adapter);
     }
 
     @Override
@@ -83,8 +86,8 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                arrayAdapter = new ArrayAdapter<Photo>(getApplicationContext(), android.R.layout.simple_list_item_1, filteredPhotos);
-                listOfSearchedPhotos.setAdapter(arrayAdapter);
+                adapter = new SearchAdapter(getApplicationContext(), filteredPhotos);
+                listOfSearchedPhotos.setAdapter(adapter);
                 return false;
             }
 
@@ -124,8 +127,8 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                arrayAdapter = new ArrayAdapter<Photo>(getApplicationContext(), android.R.layout.simple_list_item_1, filteredPhotos);
-                listOfSearchedPhotos.setAdapter(arrayAdapter);
+                adapter = new SearchAdapter(getApplicationContext(), filteredPhotos);
+                listOfSearchedPhotos.setAdapter(adapter);
                 return false;
             }
         });
