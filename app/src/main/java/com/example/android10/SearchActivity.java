@@ -4,19 +4,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import model.Model;
+import model.Photo;
 
 public class SearchActivity extends AppCompatActivity {
+
+
+    ListView listOfSearchedPhotos;
+
+    ArrayAdapter<Photo> arrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Model.init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        listOfSearchedPhotos = findViewById(R.id.listOfSearchedPhotos);
+        arrayAdapter = new ArrayAdapter<Photo>(this, android.R.layout.simple_list_item_1, Model.currentUser.getAllPhotos());
+        listOfSearchedPhotos.setAdapter(arrayAdapter);
     }
 
     @Override
@@ -40,6 +53,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                arrayAdapter.getFilter().filter(newText);
                 return false;
             }
         });
