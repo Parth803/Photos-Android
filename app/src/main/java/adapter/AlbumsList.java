@@ -4,6 +4,7 @@ import model.Album;
 import model.Model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android10.PhotosListActivity;
 import com.example.android10.R;
 
 import java.util.ArrayList;
@@ -36,10 +38,10 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
             super(itemView);
 
-            albumNameTextView = (TextView) itemView.findViewById(R.id.albumNameTextView);
-            openAlbumButton = (Button) itemView.findViewById(R.id.openAlbumButton);
+            albumNameTextView = itemView.findViewById(R.id.albumNameTextView);
+            openAlbumButton = itemView.findViewById(R.id.openAlbumButton);
             openAlbumButton.setOnClickListener(view -> open(view, albumNameTextView.getText().toString()));
-            renameOrDeleteAlbumButton = (ImageButton) itemView.findViewById(R.id.renameOrDeleteAlbumButton);
+            renameOrDeleteAlbumButton = itemView.findViewById(R.id.renameOrDeleteAlbumButton);
             renameOrDeleteAlbumButton.setOnClickListener(view -> showPopup(view, albumNameTextView.getText().toString()));
 
         }
@@ -47,6 +49,9 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
     public void open(View view, String album) {
         // NAVIGATE TO NEXT VIEW BY CALLING CHANGE VIEW FUNCTION IN MAIN
+        Intent intent = new Intent(view.getContext(), PhotosListActivity.class);
+        view.getContext().startActivity(intent);
+        System.out.println("A");
     }
 
     public void showPopup(View view, String albumName) {
