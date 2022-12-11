@@ -50,6 +50,12 @@ public final class Model {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+            try {
+                currentUser.addToTagPreset("person", false);
+                currentUser.addToTagPreset("location", true);
+            } catch (Exception e) {
+                throw new RuntimeException("tag type could not be added to preset");
+            }
             Album stockAlbum = new Album("stock");
             currentUser.albums.add(stockAlbum);
             try {
@@ -82,7 +88,7 @@ public final class Model {
                 try {
                     setCurrentUser("stock");
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException("can not find stock user");
                 }
                 input.close();
                 file.close();

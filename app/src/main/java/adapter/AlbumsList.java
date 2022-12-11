@@ -38,9 +38,9 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
             albumNameTextView = (TextView) itemView.findViewById(R.id.albumNameTextView);
             openAlbumButton = (Button) itemView.findViewById(R.id.openAlbumButton);
-            openAlbumButton.setOnClickListener(view -> open(view, albumNameTextView.toString()));
+            openAlbumButton.setOnClickListener(view -> open(view, albumNameTextView.getText().toString()));
             renameOrDeleteAlbumButton = (ImageButton) itemView.findViewById(R.id.renameOrDeleteAlbumButton);
-            renameOrDeleteAlbumButton.setOnClickListener(view -> showPopup(view, albumNameTextView.toString()));
+            renameOrDeleteAlbumButton.setOnClickListener(view -> showPopup(view, albumNameTextView.getText().toString()));
 
         }
     }
@@ -66,6 +66,8 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
         });
         inflater.inflate(R.menu.actions, popup.getMenu());
         popup.show();
+        // gotta call function to re-fresh the albums list after deleting
+        // gotta make the album_card part of a list, cause right now its just one thing
     }
 
     private ArrayList<Album> userAlbums;
