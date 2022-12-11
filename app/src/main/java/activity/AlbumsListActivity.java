@@ -20,12 +20,6 @@ public class AlbumsListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
-            Model.currentUser.albums.get(0).photos.get(0).addTag("location", "new york");
-            Model.currentUser.albums.add(new Album("Mermaid Man"));
-        } catch (Exception e) {
-            throw new RuntimeException("can not add example tag to first photo");
-        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.albumslist);
 
