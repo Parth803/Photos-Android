@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -51,7 +50,6 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
         // NAVIGATE TO NEXT VIEW BY CALLING CHANGE VIEW FUNCTION IN MAIN
         Intent intent = new Intent(view.getContext(), PhotosListActivity.class);
         view.getContext().startActivity(intent);
-        System.out.println("A");
     }
 
     public void showPopup(View view, String albumName) {
@@ -69,7 +67,7 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
             }
             return false;
         });
-        inflater.inflate(R.menu.actions, popup.getMenu());
+        inflater.inflate(R.menu.deleteaction, popup.getMenu());
         popup.show();
         // gotta call function to re-fresh the albums list after deleting
         // gotta make the album_card part of a list, cause right now its just one thing
