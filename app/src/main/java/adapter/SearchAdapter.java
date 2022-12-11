@@ -40,7 +40,7 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         caption.setText(photo.caption);
 
         File imgFile = new File(photo.path);
-        if(imgFile.exists())
+        if(imgFile.isFile())
         {
             imageView.setImageURI(Uri.fromFile(imgFile));
         }
