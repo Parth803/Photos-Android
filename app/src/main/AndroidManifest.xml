@@ -33,7 +33,9 @@
         <activity
             android:name="activity.SearchActivity"
             android:parentActivityName="activity.AlbumsListActivity"/>
-
+        <activity
+            android:name="activity.DisplayActivity"
+            android:parentActivityName="activity.AlbumsListActivity"/>
     </application>
 
 </manifest>
