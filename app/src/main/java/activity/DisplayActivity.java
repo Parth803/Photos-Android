@@ -1,4 +1,7 @@
 package activity;
 
-public class DisplayActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class DisplayActivity extends AppCompatActivity {
+
 }
