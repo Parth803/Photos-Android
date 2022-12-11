@@ -199,7 +199,7 @@ public final class User implements java.io.Serializable, Comparable<User> {
         return getPhotos(containsTag);
     }
 
-    private boolean photoContainsTag(Photo p, String type, String value) {
+    public boolean photoContainsTag(Photo p, String type, String value) {
         for (Tag tag : p.tags) {
             String elementValue = tag.value.toLowerCase(Locale.US);
             String thisValue = value.toLowerCase(Locale.US);
