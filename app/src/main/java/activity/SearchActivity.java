@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,15 +18,16 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import adapter.SearchAdapter;
 import model.Model;
 import model.Photo;
 
 public class SearchActivity extends AppCompatActivity {
 
 
-    ListView listOfSearchedPhotos;
+    GridView listOfSearchedPhotos;
 
-    ArrayAdapter<Photo> arrayAdapter;
+    SearchAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,9 @@ public class SearchActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         listOfSearchedPhotos = findViewById(R.id.listOfSearchedPhotos);
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Model.currentUser.getAllPhotos());
-        listOfSearchedPhotos.setAdapter(arrayAdapter);
+
+        adapter = new SearchAdapter(this, Model.currentUser.getAllPhotos());
+        listOfSearchedPhotos.setAdapter(adapter);
     }
 
     @Override
@@ -49,11 +52,11 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchQuery) {
-                ArrayList<Photo> filteredPhotos = new ArrayList<Photo>();
+                ArrayList<Photo> filteredPhotos = new ArrayList<>();
                 if (searchQuery.isEmpty()) {
                     filteredPhotos = Model.currentUser.getAllPhotos();
-                } else if (searchQuery.matches("\\S+=\\S+")) {
-                    Pattern p = Pattern.compile("(\\S+)=(\\S+)");
+                } else if (searchQuery.matches("([\\S]+)=([\\S ]+)")) {
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
@@ -62,8 +65,8 @@ public class SearchActivity extends AppCompatActivity {
                             throw new RuntimeException("Error parsing searchQuery for a tag");
                         }
                     }
-                } else if (searchQuery.matches("\\S+=\\S+ AND \\S+=\\S+")) {
-                    Pattern p = Pattern.compile("(\\S+)=(\\S+) AND (\\S+)=(\\S+)");
+                } else if (searchQuery.matches("([\\S]+)=([\\S ]+) AND ([\\S ]+)=([\\S ]+)")) {
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) AND ([\\S ]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
@@ -72,8 +75,8 @@ public class SearchActivity extends AppCompatActivity {
                             throw new RuntimeException("Error parsing searchQuery for tags using AND");
                         }
                     }
-                } else if (searchQuery.matches("\\S+=\\S+ OR \\S+=\\S+")) {
-                    Pattern p = Pattern.compile("(\\S+)=(\\S+) OR (\\S+)=(\\S+)");
+                } else if (searchQuery.matches("([\\S]+)=([\\S ]+) OR ([\\S]+)=([\\S ]+)")) {
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) OR ([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
@@ -83,18 +86,18 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                arrayAdapter = new ArrayAdapter<Photo>(getApplicationContext(), android.R.layout.simple_list_item_1, filteredPhotos);
-                listOfSearchedPhotos.setAdapter(arrayAdapter);
+                adapter = new SearchAdapter(getApplicationContext(), filteredPhotos);
+                listOfSearchedPhotos.setAdapter(adapter);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String searchQuery) {
-                ArrayList<Photo> filteredPhotos = new ArrayList<Photo>();
+                ArrayList<Photo> filteredPhotos = new ArrayList<>();
                 if (searchQuery.isEmpty()) {
                     filteredPhotos = Model.currentUser.getAllPhotos();
-                } else if (searchQuery.matches("\\S+=\\S+")) {
-                    Pattern p = Pattern.compile("(\\S+)=(\\S+)");
+                } else if (searchQuery.matches("([\\S]+)=([\\S ]+)")) {
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
@@ -103,8 +106,8 @@ public class SearchActivity extends AppCompatActivity {
                             throw new RuntimeException("Error parsing searchQuery for a tag");
                         }
                     }
-                } else if (searchQuery.matches("\\S+=\\S+ AND \\S+=\\S+")) {
-                    Pattern p = Pattern.compile("(\\S+)=(\\S+) AND (\\S+)=(\\S+)");
+                } else if (searchQuery.matches("([\\S]+)=([\\S ]+) AND ([\\S]+)=([\\S ]+)")) {
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) AND ([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
@@ -113,8 +116,8 @@ public class SearchActivity extends AppCompatActivity {
                             throw new RuntimeException("Error parsing searchQuery for tags using AND");
                         }
                     }
-                } else if (searchQuery.matches("\\S+=\\S+ OR \\S+=\\S+")) {
-                    Pattern p = Pattern.compile("(\\S+)=(\\S+) OR (\\S+)=(\\S+)");
+                } else if (searchQuery.matches("([\\S]+)=([\\S ]+) OR ([\\S]+)=([\\S ]+)")) {
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) OR([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
@@ -124,8 +127,8 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                arrayAdapter = new ArrayAdapter<Photo>(getApplicationContext(), android.R.layout.simple_list_item_1, filteredPhotos);
-                listOfSearchedPhotos.setAdapter(arrayAdapter);
+                adapter = new SearchAdapter(getApplicationContext(), filteredPhotos);
+                listOfSearchedPhotos.setAdapter(adapter);
                 return false;
             }
         });
