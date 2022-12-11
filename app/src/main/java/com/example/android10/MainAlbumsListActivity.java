@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import adapter.AlbumsList;
 import model.Album;
 import adapter.AlbumsListAdapter;
 import model.Model;
