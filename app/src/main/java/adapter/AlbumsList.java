@@ -1,16 +1,20 @@
 package adapter;
 
 import model.Album;
+import model.Model;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android10.R;
@@ -34,29 +38,34 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
 
             albumNameTextView = (TextView) itemView.findViewById(R.id.albumNameTextView);
             openAlbumButton = (Button) itemView.findViewById(R.id.openAlbumButton);
-            openAlbumButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    open(itemView);
-                }
-            });
+            openAlbumButton.setOnClickListener(view -> open(view, albumNameTextView.toString()));
             renameOrDeleteAlbumButton = (ImageButton) itemView.findViewById(R.id.renameOrDeleteAlbumButton);
-            renameOrDeleteAlbumButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showPopup(itemView);
-                }
-            });
+            renameOrDeleteAlbumButton.setOnClickListener(view -> showPopup(view, albumNameTextView.toString()));
 
         }
     }
 
-    public void open(View view) {
+    public void open(View view, String album) {
         // NAVIGATE TO NEXT VIEW BY CALLING CHANGE VIEW FUNCTION IN MAIN
     }
 
-    public void showPopup(View view) {
+    public void showPopup(View view, String albumName) {
         // OPEN DA POPUP -- WORK IN PROGRESS
+        PopupMenu popup = new PopupMenu(view.getContext(), view);
+        MenuInflater inflater = popup.getMenuInflater();
+        popup.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.delete) {
+                try {
+                    Model.currentUser.deleteAlbum(albumName);
+                } catch (Exception e) {
+                    throw new RuntimeException("Album cannot be deleted");
+                }
+                return true;
+            }
+            return false;
+        });
+        inflater.inflate(R.menu.actions, popup.getMenu());
+        popup.show();
     }
 
     private ArrayList<Album> userAlbums;
@@ -66,6 +75,7 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
     }
 
     // Usually involves inflating a layout from XML and returning the holder
+    @NonNull
     @Override
     public AlbumsList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -75,8 +85,7 @@ public class AlbumsList extends RecyclerView.Adapter<AlbumsList.ViewHolder> {
         View contactView = inflater.inflate(R.layout.album_card, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
-        return viewHolder;
+        return new ViewHolder(contactView);
     }
 
     // Involves populating data into the item through holder
