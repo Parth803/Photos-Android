@@ -25,13 +25,12 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Model.init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listOfSearchedPhotos = findViewById(R.id.listOfSearchedPhotos);
-        arrayAdapter = new ArrayAdapter<Photo>(this, android.R.layout.simple_list_item_1, Model.currentUser.getAllPhotos());
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Model.currentUser.getAllPhotos());
         listOfSearchedPhotos.setAdapter(arrayAdapter);
     }
 

@@ -195,17 +195,19 @@ public final class User implements java.io.Serializable, Comparable<User> {
      * @return photos filtered by tag
      */
     public ArrayList<Photo> getPhotosByTag(String type, String value) {
-        Predicate<Photo> containsTag = p -> {
-            for (Tag tag : p.tags) {
-                String elementValue = tag.value.toLowerCase(Locale.US);
-                String thisValue = value.toLowerCase(Locale.US);
-                if (tag.type.equalsIgnoreCase(type) && elementValue.startsWith(thisValue)) {
-                    return true;
-                }
-            }
-            return false;
-        };
+        Predicate<Photo> containsTag = p -> photoContainsTag(p, type, value);
         return getPhotos(containsTag);
+    }
+
+    private boolean photoContainsTag(Photo p, String type, String value) {
+        for (Tag tag : p.tags) {
+            String elementValue = tag.value.toLowerCase(Locale.US);
+            String thisValue = value.toLowerCase(Locale.US);
+            if (tag.type.equalsIgnoreCase(type) && elementValue.startsWith(thisValue)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -218,8 +220,8 @@ public final class User implements java.io.Serializable, Comparable<User> {
      * @return photos filtered by tags
      */
     public ArrayList<Photo> getPhotosByTags(String type1, String value1, String type2, String value2, boolean isAND) {
-        Predicate<Photo> containsTag1 = p -> p.tags.contains(new Tag(type1, value1));
-        Predicate<Photo> containsTag2 = p -> p.tags.contains(new Tag(type2, value2));
+        Predicate<Photo> containsTag1 = p -> photoContainsTag(p, type1, value1);
+        Predicate<Photo> containsTag2 = p -> photoContainsTag(p, type2, value2);
         Predicate<Photo> containsTags;
         if (isAND) {
             containsTags = containsTag1.and(containsTag2);
