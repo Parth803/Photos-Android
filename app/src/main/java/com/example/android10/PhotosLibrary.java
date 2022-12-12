@@ -10,7 +10,7 @@ import java.io.File;
 
 import model.Model;
 
-public class PhotosLibrary extends Application {
+public final class PhotosLibrary extends Application {
     private static File filesDirectory;
 
     @Override
@@ -33,12 +33,10 @@ public class PhotosLibrary extends Application {
     public static void errorAlert(Exception e, Context c) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle(e.getMessage());
-
         builder.setPositiveButton("OK", (dialog, which) -> {
             dialog.cancel();
             dialog.dismiss();
         });
-
         builder.show();
     }
 }
