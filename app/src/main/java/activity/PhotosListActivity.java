@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.GridView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,12 +15,15 @@ import com.example.android10.R;
 
 import java.util.Objects;
 
+import adapter.PhotosListAdapter;
 import model.Album;
 import model.Model;
 
 public class PhotosListActivity extends AppCompatActivity {
-    Button back;
+
+    GridView albumPhotos;
     Album currentAlbum;
+    PhotosListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,11 @@ public class PhotosListActivity extends AppCompatActivity {
         setContentView(R.layout.photoslist);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         currentAlbum = (Album) Model.dataTransfer.get(0);
+
+        albumPhotos = findViewById(R.id.albumPhotos);
+
+        adapter = new PhotosListAdapter(this, currentAlbum.photos, currentAlbum);
+        albumPhotos.setAdapter(adapter);
     }
 
     @Override

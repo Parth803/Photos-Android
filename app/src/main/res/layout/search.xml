@@ -6,7 +6,7 @@
     <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listOfSearchedPhotos"
+        android:id="@+id/searchedPhotos"
         android:numColumns="2"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

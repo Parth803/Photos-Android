@@ -1,12 +1,9 @@
 package activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -25,7 +22,7 @@ import model.Photo;
 public class SearchActivity extends AppCompatActivity {
 
 
-    GridView listOfSearchedPhotos;
+    GridView searchedPhotos;
 
     SearchAdapter adapter;
 
@@ -35,10 +32,10 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.search);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        listOfSearchedPhotos = findViewById(R.id.listOfSearchedPhotos);
+        searchedPhotos = findViewById(R.id.searchedPhotos);
 
         adapter = new SearchAdapter(this, Model.currentUser.getAllPhotos());
-        listOfSearchedPhotos.setAdapter(adapter);
+        searchedPhotos.setAdapter(adapter);
     }
 
     @Override
@@ -87,7 +84,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
                 adapter = new SearchAdapter(getApplicationContext(), filteredPhotos);
-                listOfSearchedPhotos.setAdapter(adapter);
+                searchedPhotos.setAdapter(adapter);
                 return false;
             }
 
@@ -128,7 +125,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
                 adapter = new SearchAdapter(getApplicationContext(), filteredPhotos);
-                listOfSearchedPhotos.setAdapter(adapter);
+                searchedPhotos.setAdapter(adapter);
                 return false;
             }
         });
