@@ -20,7 +20,7 @@ public class PhotosLibrary extends Application {
         filesDirectory = this.getFilesDir();
         Model.init();
         try {
-            Model.currentUser.albums.add(new Album("Mermaid Man"));
+            Model.currentUser.createAlbum("Mermaid Man");
             Model.currentUser.albums.get(0).photos.get(0).addTag("location", "new york");
         } catch (Exception e) {
             Log.i("Exception", e.getMessage());
@@ -43,5 +43,4 @@ public class PhotosLibrary extends Application {
         builder.show();
     }
 }
-
 
