@@ -55,6 +55,7 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         Model.dataTransfer.add(new Album("Search Results", searchResults));
         Model.dataTransfer.add(selectedPhoto);
         Intent intent = new Intent(context, DisplayActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }
