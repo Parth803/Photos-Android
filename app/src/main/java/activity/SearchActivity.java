@@ -20,10 +20,7 @@ import model.Model;
 import model.Photo;
 
 public class SearchActivity extends AppCompatActivity {
-
-
     GridView searchedPhotos;
-
     SearchAdapter adapter;
 
     @Override
@@ -44,8 +41,7 @@ public class SearchActivity extends AppCompatActivity {
         this.setTitle("Search");
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("[type=value AND/OR type=value]");
-
+        searchView.setQueryHint("type=value AND/OR type=value");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchQuery) {
@@ -132,4 +128,15 @@ public class SearchActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            Model.initPreviousScene();
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

@@ -26,17 +26,17 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="activity.PhotosListActivity"
-            android:parentActivityName="activity.AlbumsListActivity"/>
+            android:name="activity.PhotosListActivity"/>
+<!--            android:parentActivityName="activity.AlbumsListActivity"/>-->
         <activity
-            android:name="activity.EditActivity"
-            android:parentActivityName="activity.PhotosListActivity"/>
+            android:name="activity.EditActivity"/>
+<!--            android:parentActivityName="activity.PhotosListActivity"/>-->
         <activity
-            android:name="activity.SearchActivity"
-            android:parentActivityName="activity.AlbumsListActivity"/>
+            android:name="activity.SearchActivity"/>
+<!--            android:parentActivityName="activity.AlbumsListActivity"/>-->
         <activity
-            android:name="activity.DisplayActivity"
-            android:parentActivityName="activity.AlbumsListActivity"/>
+            android:name="activity.DisplayActivity"/>
+<!--            android:parentActivityName="activity.AlbumsListActivity"/>-->
     </application>
 
 </manifest>

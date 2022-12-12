@@ -51,7 +51,7 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
     }
 
     public void displayPhoto(Context context, Photo selectedPhoto) {
-        Model.initNextScene(false);
+        Model.initNextScene(true);
         Model.dataTransfer.add(new Album("Search Results", searchResults));
         Model.dataTransfer.add(selectedPhoto);
         Intent intent = new Intent(context, DisplayActivity.class);
@@ -59,3 +59,4 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         context.startActivity(intent);
     }
 }
+

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Switch;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,14 +38,10 @@ public class PhotosListActivity extends AppCompatActivity {
         setContentView(R.layout.photoslist);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         currentAlbum = (Album) Model.dataTransfer.get(0);
-
         albumPhotos = findViewById(R.id.albumPhotos);
-
         adapter = new PhotosListAdapter(this, currentAlbum.photos);
         albumPhotos.setAdapter(adapter);
-
         adapter.album = currentAlbum;
-
         displayEditSwitch = findViewById(R.id.displayEditSwitch);
         displayMode = displayEditSwitch.isChecked();
         adapter.displayMode = displayEditSwitch.isChecked();
@@ -71,6 +68,9 @@ public class PhotosListActivity extends AppCompatActivity {
             upload(this);
         } else if (id == R.id.rename) {
             rename(this);
+        } else if (id == android.R.id.home) {
+            Model.initPreviousScene();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -130,4 +130,5 @@ public class PhotosListActivity extends AppCompatActivity {
         adapter.displayMode = displayEditSwitch.isChecked();
     }
 }
+
 
