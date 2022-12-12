@@ -27,7 +27,6 @@ public class AlbumsListActivity extends AppCompatActivity {
 
         listOfAlbums = findViewById(R.id.rvContacts);
 
-        // Create adapter passing in the sample user data
         adapter = new AlbumsListAdapter(Model.currentUser.albums);
 
         listOfAlbums.setAdapter(adapter);
@@ -37,7 +36,7 @@ public class AlbumsListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.searchbutton, menu);
+        getMenuInflater().inflate(R.menu.albumslistmenu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -48,6 +47,8 @@ public class AlbumsListActivity extends AppCompatActivity {
 
         if (id == R.id.search_button) {
             openSearch(this);
+        } else if (id == R.id.create_button) {
+            createAlbum(this);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -59,9 +60,14 @@ public class AlbumsListActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    public static void refresh(Context c) {
+    public void createAlbum(Context context) {
+        // FILL IN WITH POP UP XML TO CREATE NEW ALBUM
+        refresh(context);
+    }
+
+    public static void refresh(Context context) {
         adapter = new AlbumsListAdapter(Model.currentUser.albums);
         listOfAlbums.setAdapter(adapter);
-        listOfAlbums.setLayoutManager(new LinearLayoutManager(c));
+        listOfAlbums.setLayoutManager(new LinearLayoutManager(context));
     }
 }

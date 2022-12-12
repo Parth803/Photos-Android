@@ -49,7 +49,6 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
     }
 
     public void open(View view, String albumName) {
-        // NAVIGATE TO NEXT VIEW BY CALLING CHANGE VIEW FUNCTION IN MAIN
         Model.initNextScene(true);
         Model.dataTransfer.add(Model.currentUser.albums.get(Model.currentUser.albums.indexOf(new Album(albumName))));
         Intent intent = new Intent(view.getContext(), PhotosListActivity.class);
@@ -59,8 +58,20 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
     public void showPopup(View view, String albumName) {
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.album_cardmenu, popup.getMenu());
+        popup.show();
         popup.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.delete) {
+            if (item.getItemId() == R.id.rename) {
+                try {
+                    // FILL IN WITH POP UP XML TO CREATE NEW ALBUM
+                    // Model.currentUser.renameAlbum(albumName);
+                    Model.persist();
+                    AlbumsListActivity.refresh(view.getContext());
+                } catch (Exception e) {
+                    PhotosLibrary.errorAlert(e, view.getContext());
+                }
+                return true;
+            } else if (item.getItemId() == R.id.delete) {
                 try {
                     Model.currentUser.deleteAlbum(albumName);
                     Model.persist();
@@ -72,9 +83,6 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
             }
             return false;
         });
-        inflater.inflate(R.menu.deleteaction, popup.getMenu());
-        popup.show();
-        // gotta call function to re-fresh the albums list after deleting
     }
 
     private final ArrayList<Album> userAlbums;
