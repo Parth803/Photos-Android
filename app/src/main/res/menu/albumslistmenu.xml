@@ -9,8 +9,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:icon="@android:drawable/ic_menu_search" />
 
     <item
-        android:id="@+id/create_button"
-        android:title="@string/create"
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_add" />
+        android:id="@+id/action_create"
+        android:title="create"
+        android:icon="@android:drawable/ic_menu_add"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView"/>
 </menu>
