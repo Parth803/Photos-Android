@@ -126,6 +126,8 @@ public class PhotosListActivity extends AppCompatActivity {
     public void updateActivity() {
         adapter = new PhotosListAdapter(this, currentAlbum.photos);
         albumPhotos.setAdapter(adapter);
+        adapter.album = currentAlbum;
+        adapter.displayMode = displayEditSwitch.isChecked();
     }
 }
 
