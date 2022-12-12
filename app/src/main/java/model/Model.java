@@ -1,8 +1,13 @@
 package model;
 
-//import photos.Photos;
+import com.example.android10.PhotosLibrary;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
@@ -40,8 +45,10 @@ public final class Model {
     public static void init() {
         dataTransfer = new ArrayList<>();
         dataSnapshots = new ArrayDeque<>();
-        String path = "data/admin/users.txt";
-        File serializedUsers = new File(path);
+        File dir = new File(PhotosLibrary.getFilesDirectory(), "data");
+        if(!dir.exists()) dir.mkdir();
+        File serializedUsers = new File(dir, "users.txt");
+        String path;
         if (serializedUsers.length() == 0) {
             users = new ArrayList<>();
             users.add(new User("stock"));
@@ -79,7 +86,7 @@ public final class Model {
         }
         else {
             try {
-                FileInputStream file = new FileInputStream(path);
+                FileInputStream file = new FileInputStream(serializedUsers);
                 ObjectInputStream input = new ObjectInputStream(file);
                 users = (ArrayList<User>) input.readObject();
                 if (users.size() == 0) {
@@ -103,7 +110,10 @@ public final class Model {
      */
     public static void persist() {
         try {
-            FileOutputStream file = new FileOutputStream("data/admin/users.txt");
+            File dir = new File(PhotosLibrary.getFilesDirectory(), "data");
+            if(!dir.exists()) dir.mkdir();
+            File fileD = new File(dir, "users.txt");
+            FileOutputStream file = new FileOutputStream(fileD);
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(users);
             output.close();

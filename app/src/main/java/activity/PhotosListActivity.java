@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,9 +68,11 @@ public class PhotosListActivity extends AppCompatActivity {
             try {
                 currentAlbum.addPhoto(finalPath);
                 Model.persist();
+                System.out.println(currentAlbum.photos);
             } catch (Exception e) {
-                throw new RuntimeException("Error adding uploaded photo to album");
+                Log.i("Exception", e.getMessage());
             }
         }
     }
 }
+

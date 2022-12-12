@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"model"},{"l":"photos"},{"l":"stages.primary.admin"},{"l":"stages.primary.albums"},{"l":"stages.primary.edit"},{"l":"stages.primary.main"},{"l":"stages.primary.photoslist"},{"l":"stages.primary.search"},{"l":"stages.viewphoto.main"}];updateSearchResults();

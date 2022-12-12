@@ -1,10 +1,5 @@
 package model;
 
-//import javafx.util.Pair;
-
-//import java.io.Serial;
-import android.util.Pair;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -46,7 +41,6 @@ public final class User implements java.io.Serializable, Comparable<User> {
         this.username = username;
         this.albums = new ArrayList<>();
         this.tagPreset = new ArrayList<>();
-        this.tagPreset.add(new Pair<>("Other", "Custom"));
         this.uniquePhotos = new HashMap<>();
     }
 
