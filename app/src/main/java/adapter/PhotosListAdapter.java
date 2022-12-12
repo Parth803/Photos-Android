@@ -59,7 +59,6 @@ public class PhotosListAdapter extends ArrayAdapter<Photo> {
         } else {
             intent = new Intent(context, EditActivity.class);
         }
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }
