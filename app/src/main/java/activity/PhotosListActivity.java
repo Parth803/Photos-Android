@@ -119,7 +119,15 @@ public class PhotosListActivity extends AppCompatActivity {
                 Model.persist();
                 updateActivity();
             } catch (Exception e) {
-                Log.i("Exception", e.getMessage());
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(e.getMessage());
+
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    dialog.cancel();
+                    dialog.dismiss();
+                });
+
+                builder.show();
             }
         }
     }
