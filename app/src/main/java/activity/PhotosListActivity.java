@@ -1,12 +1,10 @@
 package activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -16,6 +14,7 @@ import android.widget.Switch;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.android10.PhotosLibrary;
 import com.example.android10.R;
 
 import java.util.Objects;
@@ -97,7 +96,7 @@ public class PhotosListActivity extends AppCompatActivity {
                 this.setTitle(currentAlbum.name);
                 Model.persist();
             } catch (Exception e) {
-                throw new RuntimeException("Error renaming album");
+                PhotosLibrary.errorAlert(e,this);
             }
         });
 
@@ -119,18 +118,11 @@ public class PhotosListActivity extends AppCompatActivity {
                 Model.persist();
                 updateActivity();
             } catch (Exception e) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(e.getMessage());
-
-                builder.setPositiveButton("OK", (dialog, which) -> {
-                    dialog.cancel();
-                    dialog.dismiss();
-                });
-
-                builder.show();
+                PhotosLibrary.errorAlert(e,this);
             }
         }
     }
+
     public void updateActivity() {
         adapter = new PhotosListAdapter(this, currentAlbum.photos);
         albumPhotos.setAdapter(adapter);

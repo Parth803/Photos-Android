@@ -14,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android10.PhotosLibrary;
 import com.example.android10.R;
 
 import java.util.ArrayList;
 
+import activity.AlbumsListActivity;
 import activity.PhotosListActivity;
 import model.Album;
 import model.Model;
@@ -61,8 +63,10 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
             if (item.getItemId() == R.id.delete) {
                 try {
                     Model.currentUser.deleteAlbum(albumName);
+                    Model.persist();
+                    AlbumsListActivity.refresh(view.getContext());
                 } catch (Exception e) {
-                    throw new RuntimeException("Album cannot be deleted");
+                    PhotosLibrary.errorAlert(e, view.getContext());
                 }
                 return true;
             }

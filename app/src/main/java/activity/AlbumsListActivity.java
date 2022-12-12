@@ -13,10 +13,11 @@ import android.view.MenuItem;
 import com.example.android10.R;
 
 import adapter.AlbumsListAdapter;
-import model.Album;
 import model.Model;
 
 public class AlbumsListActivity extends AppCompatActivity {
+    public static AlbumsListAdapter adapter;
+    public static RecyclerView listOfAlbums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +25,14 @@ public class AlbumsListActivity extends AppCompatActivity {
         setContentView(R.layout.albumslist);
         Model.logOut();
 
-        RecyclerView rvContacts = findViewById(R.id.rvContacts);
+        listOfAlbums = findViewById(R.id.rvContacts);
 
         // Create adapter passing in the sample user data
-        AlbumsListAdapter adapter = new AlbumsListAdapter(Model.currentUser.albums);
+        adapter = new AlbumsListAdapter(Model.currentUser.albums);
 
-        rvContacts.setAdapter(adapter);
+        listOfAlbums.setAdapter(adapter);
 
-        rvContacts.setLayoutManager(new LinearLayoutManager(this));
+        listOfAlbums.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -56,5 +57,11 @@ public class AlbumsListActivity extends AppCompatActivity {
         Model.initNextScene(true);
         Intent intent = new Intent(context, SearchActivity.class);
         context.startActivity(intent);
+    }
+
+    public static void refresh(Context c) {
+        adapter = new AlbumsListAdapter(Model.currentUser.albums);
+        listOfAlbums.setAdapter(adapter);
+        listOfAlbums.setLayoutManager(new LinearLayoutManager(c));
     }
 }
