@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Switch;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
