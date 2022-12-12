@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android10.R;
 
+import java.io.File;
 import java.util.Objects;
 
 import model.Album;
@@ -58,11 +59,14 @@ public class PhotosListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
+            File file = new File(selectedImage.getPath());
+            final String[] split = file.getPath().split(":");
+            String finalPath = split[1].replace(split[1].split("/")[8], "");
+            System.out.println(finalPath);
             System.out.println(currentAlbum.photos);
-            System.out.println(selectedImage.getPath());
             try {
-                currentAlbum.addPhoto(selectedImage.getPath());
-                System.out.println(currentAlbum.photos);
+                currentAlbum.addPhoto(finalPath);
+                Model.persist();
             } catch (Exception e) {
                 throw new RuntimeException("Error adding uploaded photo to album");
             }
