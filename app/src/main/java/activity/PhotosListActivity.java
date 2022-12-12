@@ -33,7 +33,9 @@ public class PhotosListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.upload, menu);
+        this.setTitle(currentAlbum.name);
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override

@@ -17,11 +17,17 @@ import com.example.android10.R;
 import java.util.ArrayList;
 
 import activity.DisplayActivity;
+import model.Album;
+import model.Model;
 import model.Photo;
 
 public class SearchAdapter extends ArrayAdapter<Photo> {
+
+    public ArrayList<Photo> searchResults;
+
     public SearchAdapter(@NonNull Context context, ArrayList<Photo> listOfFilteredPhotos) {
         super(context, 0, listOfFilteredPhotos);
+        searchResults = listOfFilteredPhotos;
     }
 
     @NonNull
@@ -39,11 +45,16 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
 
         imageView.setImageURI(Uri.parse(photo.path));
 
-        singlePhoto.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), DisplayActivity.class);
-            view.getContext().startActivity(intent);
-        });
+        singlePhoto.setOnClickListener(view -> displayPhoto(view.getContext(), photo));
 
         return singlePhoto;
+    }
+
+    public void displayPhoto(Context context, Photo selectedPhoto) {
+        Model.initNextScene(false);
+        Model.dataTransfer.add(new Album("Search Results", searchResults));
+        Model.dataTransfer.add(selectedPhoto);
+        Intent intent = new Intent(context, DisplayActivity.class);
+        context.startActivity(intent);
     }
 }
