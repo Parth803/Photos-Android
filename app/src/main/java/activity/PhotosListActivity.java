@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,8 @@ import model.Model;
 public class PhotosListActivity extends AppCompatActivity {
 
     GridView albumPhotos;
+    Switch displayEditSwitch;
+    Boolean displayMode;
     Album currentAlbum;
     PhotosListAdapter adapter;
 
@@ -34,8 +37,19 @@ public class PhotosListActivity extends AppCompatActivity {
 
         albumPhotos = findViewById(R.id.albumPhotos);
 
-        adapter = new PhotosListAdapter(this, currentAlbum.photos, currentAlbum);
+        adapter = new PhotosListAdapter(this, currentAlbum.photos);
         albumPhotos.setAdapter(adapter);
+
+        adapter.album = currentAlbum;
+
+        displayEditSwitch = findViewById(R.id.displayEditSwitch);
+        displayMode = displayEditSwitch.isChecked();
+        adapter.displayMode = displayEditSwitch.isChecked();
+        displayEditSwitch.setOnCheckedChangeListener((view, checked) -> {
+            displayMode = checked;
+            adapter.displayMode = checked;
+            displayEditSwitch.setText(checked ? "Display Mode" : "Edit Mode");
+        });
     }
 
     @Override

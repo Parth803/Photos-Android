@@ -17,22 +17,22 @@ import com.example.android10.R;
 import java.util.ArrayList;
 
 import activity.DisplayActivity;
+import activity.EditActivity;
 import model.Album;
 import model.Model;
 import model.Photo;
 
 public class PhotosListAdapter extends ArrayAdapter<Photo> {
     public Album album;
+    public Boolean displayMode;
 
-    public PhotosListAdapter(@NonNull Context context, ArrayList<Photo> photos, Album currentAlbum) {
+    public PhotosListAdapter(@NonNull Context context, ArrayList<Photo> photos) {
         super(context, 0, photos);
-        album = currentAlbum;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         View singlePhoto = convertView;
 
         if (singlePhoto == null) {
@@ -44,16 +44,21 @@ public class PhotosListAdapter extends ArrayAdapter<Photo> {
 
         imageView.setImageURI(Uri.parse(photo.path));
 
-        singlePhoto.setOnClickListener(view -> displayPhoto(view.getContext(), photo));
+        singlePhoto.setOnClickListener(view -> displayEditPhoto(view.getContext(), photo));
 
         return singlePhoto;
     }
 
-    public void displayPhoto(Context context, Photo selectedPhoto) {
+    public void displayEditPhoto(Context context, Photo selectedPhoto) {
         Model.initNextScene(true);
         Model.dataTransfer.add(album);
         Model.dataTransfer.add(selectedPhoto);
-        Intent intent = new Intent(context, DisplayActivity.class);
+        Intent intent;
+        if (displayMode) {
+            intent = new Intent(context, DisplayActivity.class);
+        } else {
+            intent = new Intent(context, EditActivity.class);
+        }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
