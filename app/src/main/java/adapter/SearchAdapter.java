@@ -44,20 +44,12 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
 
         caption.setText(photo.caption);
 
-        File imgFile = new File(photo.path);
-        if(imgFile.isFile())
-        {
-            imageView.setImageURI(Uri.fromFile(imgFile));
-        }
+        imageView.setImageURI(Uri.parse(photo.path));
 
         singlePhoto.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), DisplayActivity.class);
             view.getContext().startActivity(intent);
         });
-        // this is how to convert Uri to Path and convert a path back to Uri
-        // so that we can keep all the code the same without any headaches
-        // photo.path = Intent.getData().toString();
-        // Uri imageUri = Uri.parse(photo.path);
 
         return singlePhoto;
     }

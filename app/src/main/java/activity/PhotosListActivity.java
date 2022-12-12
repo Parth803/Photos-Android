@@ -2,21 +2,17 @@ package activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android10.R;
 
-import java.io.File;
 import java.util.Objects;
 
 import model.Album;
@@ -51,7 +47,7 @@ public class PhotosListActivity extends AppCompatActivity {
     }
 
     public void upload(Context context) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 3);
     }
 
@@ -59,16 +55,10 @@ public class PhotosListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            File file = new File(selectedImage.getPath());
-            final String[] split = file.getPath().split(":");
-            String finalPath = split[1].replace(split[1].split("/")[8], "");
-            System.out.println(finalPath);
-            System.out.println(currentAlbum.photos);
+            getContentResolver().takePersistableUriPermission(data.getData(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
-                currentAlbum.addPhoto(finalPath);
+                currentAlbum.addPhoto(data.getData().toString());
                 Model.persist();
-                System.out.println(currentAlbum.photos);
             } catch (Exception e) {
                 Log.i("Exception", e.getMessage());
             }

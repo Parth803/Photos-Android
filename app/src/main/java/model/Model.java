@@ -1,6 +1,7 @@
 package model;
 
 import com.example.android10.PhotosLibrary;
+import com.example.android10.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,19 +67,19 @@ public final class Model {
             Album stockAlbum = new Album("stock");
             currentUser.albums.add(stockAlbum);
             try {
-                path = new File("data/stock/one.jpeg").getAbsolutePath();
+                path = "android.resource://com.example.android10/" + R.drawable.one;
                 stockAlbum.addPhoto(path, "first");
-                path = new File("data/stock/two.jpeg").getAbsolutePath();
+                path = "android.resource://com.example.android10/" + R.drawable.two;
                 stockAlbum.addPhoto(path, "second");
-                path = new File("data/stock/three.jpeg").getAbsolutePath();
+                path = "android.resource://com.example.android10/" + R.drawable.three;
                 stockAlbum.addPhoto(path, "third");
-                path = new File("data/stock/four.jpeg").getAbsolutePath();
+                path = "android.resource://com.example.android10/" + R.drawable.four;
                 stockAlbum.addPhoto(path, "fourth");
-                path = new File("data/stock/five.jpeg").getAbsolutePath();
+                path = "android.resource://com.example.android10/" + R.drawable.five;
                 stockAlbum.addPhoto(path, "fifth");
-                path = new File("data/stock/six.jpeg").getAbsolutePath();
+                path = "android.resource://com.example.android10/" + R.drawable.six;
                 stockAlbum.addPhoto(path, "sixth");
-                path = new File("data/stock/seven.jpeg").getAbsolutePath();
+                path = "android.resource://com.example.android10/" + R.drawable.seven;
                 stockAlbum.addPhoto(path, "seventh");
             } catch (Exception e) {
                 throw new RuntimeException("stock photos could not be added");
@@ -196,5 +197,4 @@ public final class Model {
 //        Photos.closeViewPhotoStage();
     }
 }
-
 
