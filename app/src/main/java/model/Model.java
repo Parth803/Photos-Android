@@ -194,7 +194,7 @@ public final class Model {
     public static void logOut() {
         dataSnapshots.clear();
         dataTransfer.clear();
-//        Photos.closeViewPhotoStage();
     }
 }
+
 

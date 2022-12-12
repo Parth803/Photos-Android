@@ -22,6 +22,7 @@ public class AlbumsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.albumslist);
+        Model.logOut();
 
         RecyclerView rvContacts = findViewById(R.id.rvContacts);
 
@@ -52,6 +53,7 @@ public class AlbumsListActivity extends AppCompatActivity {
 
     public void openSearch(Context context) {
         // NAVIGATE TO NEXT VIEW BY CALLING CHANGE VIEW FUNCTION IN MAIN
+        Model.initNextScene(true);
         Intent intent = new Intent(context, SearchActivity.class);
         context.startActivity(intent);
     }

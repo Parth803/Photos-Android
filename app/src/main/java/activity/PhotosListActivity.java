@@ -111,7 +111,6 @@ public class PhotosListActivity extends AppCompatActivity {
             try {
                 currentAlbum.addPhoto(data.getData().toString());
                 Model.persist();
-
             } catch (Exception e) {
                 Log.i("Exception", e.getMessage());
             }
