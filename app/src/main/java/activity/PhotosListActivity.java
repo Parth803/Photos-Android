@@ -70,7 +70,7 @@ public class PhotosListActivity extends AppCompatActivity {
 
         if (id == R.id.upload) {
             upload(this);
-        } else {
+        } else if (id == R.id.rename) {
             rename(this);
         }
         return super.onOptionsItemSelected(item);
@@ -90,15 +90,21 @@ public class PhotosListActivity extends AppCompatActivity {
         builder.setView(input);
 
         builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.cancel();
             dialog.dismiss();
             try {
                 Model.currentUser.renameAlbum(currentAlbum.name, input.getText().toString());
+                this.setTitle(currentAlbum.name);
+                Model.persist();
             } catch (Exception e) {
                 throw new RuntimeException("Error renaming album");
             }
-            Model.persist();
         });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.cancel();
+            dialog.dismiss();
+        });
 
         builder.show();
     }
@@ -111,10 +117,15 @@ public class PhotosListActivity extends AppCompatActivity {
             try {
                 currentAlbum.addPhoto(data.getData().toString());
                 Model.persist();
+                updateActivity();
             } catch (Exception e) {
                 Log.i("Exception", e.getMessage());
             }
         }
+    }
+    public void updateActivity() {
+        adapter = new PhotosListAdapter(this, currentAlbum.photos);
+        albumPhotos.setAdapter(adapter);
     }
 }
 
