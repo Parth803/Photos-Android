@@ -9,7 +9,6 @@ import com.example.android10.R;
 
 import java.util.Objects;
 
-import adapter.SearchAdapter;
 import model.Album;
 import model.Model;
 import model.Photo;
