@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.io.File;
 
-import model.Album;
 import model.Model;
 
 public class PhotosLibrary extends Application {
@@ -43,4 +42,5 @@ public class PhotosLibrary extends Application {
         builder.show();
     }
 }
+
 

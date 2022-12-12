@@ -99,7 +99,12 @@ public final class Album implements java.io.Serializable, Comparable<Album> {
      */
     public void addPhoto(String path) throws Exception {
         if (this.photos.contains(new Photo(path))) {
-            throw new Exception("Photo is already in album");
+            throw new Exception("Photo is already in this album");
+        }
+        for (Album album : Model.currentUser.albums) {
+            if (album.photos.contains(new Photo(path))) {
+                throw new Exception("Photo is already in " + album.name + " album");
+            }
         }
         Model.currentUser.uniquePhotos.putIfAbsent(path, new Photo(path));
         Photo newPhoto;
@@ -123,6 +128,11 @@ public final class Album implements java.io.Serializable, Comparable<Album> {
     public void addPhoto(String path, String caption) throws Exception {
         if (this.photos.contains(new Photo(path))) {
             throw new Exception("Photo is already in album");
+        }
+        for (Album album : Model.currentUser.albums) {
+            if (album.photos.contains(new Photo(path))) {
+                throw new Exception("Photo is already in " + album.name + " album");
+            }
         }
         Model.currentUser.uniquePhotos.putIfAbsent(path, new Photo(path, caption));
         Photo newPhoto = Model.currentUser.uniquePhotos.get(path);
