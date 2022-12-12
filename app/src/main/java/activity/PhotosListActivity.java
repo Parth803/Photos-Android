@@ -1,15 +1,19 @@
 package activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Switch;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android10.R;
@@ -54,7 +58,7 @@ public class PhotosListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.upload, menu);
+        getMenuInflater().inflate(R.menu.photoslistmenu, menu);
         this.setTitle(currentAlbum.name);
         return super.onCreateOptionsMenu(menu);
 
@@ -66,6 +70,8 @@ public class PhotosListActivity extends AppCompatActivity {
 
         if (id == R.id.upload) {
             upload(this);
+        } else {
+            rename(this);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -73,6 +79,28 @@ public class PhotosListActivity extends AppCompatActivity {
     public void upload(Context context) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 3);
+    }
+    public void rename(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change \"" + currentAlbum.name + "\" to:");
+
+        final EditText input = new EditText(this);
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            try {
+                Model.currentUser.renameAlbum(currentAlbum.name, input.getText().toString());
+            } catch (Exception e) {
+                throw new RuntimeException("Error renaming album");
+            }
+            Model.persist();
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
     }
 
     @Override
@@ -83,6 +111,7 @@ public class PhotosListActivity extends AppCompatActivity {
             try {
                 currentAlbum.addPhoto(data.getData().toString());
                 Model.persist();
+
             } catch (Exception e) {
                 Log.i("Exception", e.getMessage());
             }
