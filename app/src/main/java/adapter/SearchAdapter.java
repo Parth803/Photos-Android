@@ -8,19 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.android10.R;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import activity.DisplayActivity;
-import activity.EditActivity;
-import activity.PhotosListActivity;
 import model.Photo;
 
 public class SearchAdapter extends ArrayAdapter<Photo> {
@@ -39,10 +35,7 @@ public class SearchAdapter extends ArrayAdapter<Photo> {
         }
 
         Photo photo = getItem(position);
-        TextView caption = singlePhoto.findViewById(R.id.imageCaption);
         ImageView imageView = singlePhoto.findViewById(R.id.imageView);
-
-        caption.setText(photo.caption);
 
         imageView.setImageURI(Uri.parse(photo.path));
 

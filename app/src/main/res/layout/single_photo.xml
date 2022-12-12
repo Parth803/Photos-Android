@@ -12,10 +12,4 @@
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher"/>
 
-    <TextView
-        android:id="@+id/imageCaption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAlignment="center" />
 </LinearLayout>

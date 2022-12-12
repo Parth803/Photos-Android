@@ -1,8 +1,5 @@
 package adapter;
 
-import model.Album;
-import model.Model;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import activity.PhotosListActivity;
 import com.example.android10.R;
 
 import java.util.ArrayList;
+
+import activity.PhotosListActivity;
+import model.Album;
+import model.Model;
 
 
 // Create the basic adapter extending from RecyclerView.adapter
