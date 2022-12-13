@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.android10.PhotosLibrary;
 import com.example.android10.R;
 
 import adapter.AlbumsListAdapter;
@@ -21,6 +22,7 @@ public class AlbumsListActivity extends AppCompatActivity {
     public static AlbumsListAdapter adapter;
     public static RecyclerView listOfAlbums;
     public Menu optionsMenu;
+    public Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,7 @@ public class AlbumsListActivity extends AppCompatActivity {
         listOfAlbums = findViewById(R.id.rvContacts);
 
         adapter = new AlbumsListAdapter(Model.currentUser.albums);
-
+        context = this;
         listOfAlbums.setAdapter(adapter);
 
         listOfAlbums.setLayoutManager(new LinearLayoutManager(this));
@@ -43,6 +45,19 @@ public class AlbumsListActivity extends AppCompatActivity {
         MenuItem menuItem = menu.findItem(R.id.action_create);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Enter new album name...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                createAlbum(context, query);
+                menuItem.collapseActionView();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         MenuItemCompat.setOnActionExpandListener(menuItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
@@ -66,7 +81,6 @@ public class AlbumsListActivity extends AppCompatActivity {
             openSearch(this);
         } else if (id == R.id.action_create) {
             optionsMenu.findItem(R.id.search_button).setVisible(false);
-            createAlbum(this);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -78,9 +92,15 @@ public class AlbumsListActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    public void createAlbum(Context context) {
+    public void createAlbum(Context context, String albumName) {
         // FILL IN WITH POP UP XML TO CREATE NEW ALBUM
-        refresh(context);
+        try {
+            Model.currentUser.createAlbum(albumName);
+            Model.persist();
+            refresh(context);
+        } catch (Exception e) {
+            PhotosLibrary.errorAlert(e, context);
+        }
     }
 
     public static void refresh(Context context) {
