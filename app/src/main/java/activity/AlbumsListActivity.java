@@ -21,8 +21,11 @@ import model.Model;
 public class AlbumsListActivity extends AppCompatActivity {
     public static AlbumsListAdapter adapter;
     public static RecyclerView listOfAlbums;
-    public Menu optionsMenu;
+    public static Menu optionsMenu;
     public Context context;
+    public static boolean isRename;
+    public static String oldAlbumName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,8 @@ public class AlbumsListActivity extends AppCompatActivity {
 
         adapter = new AlbumsListAdapter(Model.currentUser.albums);
         context = this;
+        isRename = false;
+        oldAlbumName = null;
         listOfAlbums.setAdapter(adapter);
 
         listOfAlbums.setLayoutManager(new LinearLayoutManager(this));
@@ -48,7 +53,18 @@ public class AlbumsListActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                createAlbum(context, query);
+                if (isRename) {
+                    isRename = false;
+                    try {
+                        Model.currentUser.renameAlbum(oldAlbumName, query);
+                        Model.persist();
+                        refresh(context);
+                    } catch (Exception e) {
+                        PhotosLibrary.errorAlert(e, context);
+                    }
+                } else {
+                    createAlbum(context, query);
+                }
                 menuItem.collapseActionView();
                 return false;
             }
@@ -66,6 +82,8 @@ public class AlbumsListActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
+                isRename = false;
+                searchView.setQueryHint("Enter new album name...");
                 optionsMenu.findItem(R.id.search_button).setVisible(true);
                 return true;
             }
@@ -93,7 +111,6 @@ public class AlbumsListActivity extends AppCompatActivity {
     }
 
     public void createAlbum(Context context, String albumName) {
-        // FILL IN WITH POP UP XML TO CREATE NEW ALBUM
         try {
             Model.currentUser.createAlbum(albumName);
             Model.persist();

@@ -3,7 +3,7 @@
     <string name="open">Open</string>
     <string name="delete">Delete</string>
     <string name="search">Search</string>
-    <string name="edit_mode">Edit Mode</string>
+    <string name="display_mode">Display Mode</string>
     <string name="rename">Rename</string>
     <string name="create">Create</string>
 </resources>

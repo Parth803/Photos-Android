@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android10.PhotosLibrary;
@@ -62,11 +64,15 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
         popup.show();
         popup.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.rename) {
+                SearchView searchView;
                 try {
-                    // FILL IN WITH POP UP XML TO CREATE NEW ALBUM
-                    // Model.currentUser.renameAlbum(albumName);
-                    Model.persist();
-                    AlbumsListActivity.refresh(view.getContext());
+                    MenuItem menuItem = AlbumsListActivity.optionsMenu.findItem(R.id.action_create);
+                    searchView = (SearchView) menuItem.getActionView();
+                    AlbumsListActivity.optionsMenu.findItem(R.id.search_button).setVisible(false);
+                    searchView.setQueryHint("Rename " + albumName + "...");
+                    AlbumsListActivity.isRename = true;
+                    AlbumsListActivity.oldAlbumName = albumName;
+                    menuItem.expandActionView();
                 } catch (Exception e) {
                     PhotosLibrary.errorAlert(e, view.getContext());
                 }
@@ -122,3 +128,5 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
         return userAlbums.size();
     }
 }
+
+

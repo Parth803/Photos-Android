@@ -29,9 +29,6 @@
             android:name="activity.PhotosListActivity"/>
 <!--            android:parentActivityName="activity.AlbumsListActivity"/>-->
         <activity
-            android:name="activity.EditActivity"/>
-<!--            android:parentActivityName="activity.PhotosListActivity"/>-->
-        <activity
             android:name="activity.SearchActivity"/>
 <!--            android:parentActivityName="activity.AlbumsListActivity"/>-->
         <activity

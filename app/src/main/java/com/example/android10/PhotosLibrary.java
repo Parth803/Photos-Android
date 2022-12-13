@@ -19,7 +19,6 @@ public final class PhotosLibrary extends Application {
         filesDirectory = this.getFilesDir();
         Model.init();
         try {
-            Model.currentUser.createAlbum("Mermaid Man");
             Model.currentUser.albums.get(0).photos.get(0).addTag("location", "new york");
         } catch (Exception e) {
             Log.i("Exception", e.getMessage());
@@ -40,5 +39,4 @@ public final class PhotosLibrary extends Application {
         builder.show();
     }
 }
-
 

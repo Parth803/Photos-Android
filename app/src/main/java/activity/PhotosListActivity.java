@@ -1,17 +1,15 @@
 package activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Switch;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android10.PhotosLibrary;
@@ -25,11 +23,13 @@ import model.Model;
 
 public class PhotosListActivity extends AppCompatActivity {
 
-    GridView albumPhotos;
-    Switch displayEditSwitch;
-    Boolean displayMode;
-    Album currentAlbum;
-    PhotosListAdapter adapter;
+    public GridView albumPhotos;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch displayDeleteSwitch;
+    public static Boolean deleteMode;
+    public static Album currentAlbum;
+    public PhotosListAdapter adapter;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +41,13 @@ public class PhotosListActivity extends AppCompatActivity {
         adapter = new PhotosListAdapter(this, currentAlbum.photos);
         albumPhotos.setAdapter(adapter);
         adapter.album = currentAlbum;
-        displayEditSwitch = findViewById(R.id.displayEditSwitch);
-        displayMode = displayEditSwitch.isChecked();
-        adapter.displayMode = displayEditSwitch.isChecked();
-        displayEditSwitch.setOnCheckedChangeListener((view, checked) -> {
-            displayMode = checked;
-            adapter.displayMode = checked;
-            displayEditSwitch.setText(checked ? "Display Mode" : "Edit Mode");
+        context = this;
+        adapter.gridview = albumPhotos;
+        displayDeleteSwitch = findViewById(R.id.displayDeleteSwitch);
+        deleteMode = displayDeleteSwitch.isChecked();
+        displayDeleteSwitch.setOnCheckedChangeListener((view, checked) -> {
+            deleteMode = checked;
+            displayDeleteSwitch.setText(checked ? "Delete Mode" : "Display Mode");
         });
     }
 
@@ -65,8 +65,6 @@ public class PhotosListActivity extends AppCompatActivity {
 
         if (id == R.id.upload) {
             upload(this);
-        } else if (id == R.id.rename) {
-            rename(this);
         } else if (id == android.R.id.home) {
             Model.initPreviousScene();
             finish();
@@ -77,34 +75,6 @@ public class PhotosListActivity extends AppCompatActivity {
     public void upload(Context context) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 3);
-    }
-    public void rename(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Change \"" + currentAlbum.name + "\" to:");
-
-        final EditText input = new EditText(this);
-
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            dialog.cancel();
-            dialog.dismiss();
-            try {
-                Model.currentUser.renameAlbum(currentAlbum.name, input.getText().toString());
-                this.setTitle(currentAlbum.name);
-                Model.persist();
-            } catch (Exception e) {
-                PhotosLibrary.errorAlert(e,this);
-            }
-        });
-
-        builder.setNegativeButton("Cancel", (dialog, which) -> {
-            dialog.cancel();
-            dialog.dismiss();
-        });
-
-        builder.show();
     }
 
     @Override
@@ -123,11 +93,10 @@ public class PhotosListActivity extends AppCompatActivity {
     }
 
     public void updateActivity() {
-        adapter = new PhotosListAdapter(this, currentAlbum.photos);
-        albumPhotos.setAdapter(adapter);
+        adapter = new PhotosListAdapter(context, currentAlbum.photos);
         adapter.album = currentAlbum;
-        adapter.displayMode = displayEditSwitch.isChecked();
+        adapter.gridview = albumPhotos;
+        albumPhotos.setAdapter(adapter);
     }
 }
-
 
