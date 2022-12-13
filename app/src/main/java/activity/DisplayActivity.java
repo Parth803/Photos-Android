@@ -1,18 +1,21 @@
 package activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android10.PhotosLibrary;
 import com.example.android10.R;
 
 import java.util.Objects;
@@ -31,9 +34,11 @@ public class DisplayActivity extends AppCompatActivity {
     public ImageView imageView;
     public static RecyclerView listOfTags;
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     public Switch tagSwitch;
     public static Boolean isPersonTag;
     public SearchView tagValueField;
+    public Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +53,10 @@ public class DisplayActivity extends AppCompatActivity {
         listOfTags.setLayoutManager(new LinearLayoutManager(this));
         updateDisplay();
         updateTagsList(this);
+        context = this;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.displaymenu, menu);
@@ -58,12 +65,51 @@ public class DisplayActivity extends AppCompatActivity {
         updatePrevNext();
 
         tagSwitch = (Switch) menu.findItem(R.id.tagSwitch).getActionView();
+        tagValueField = (SearchView) menu.findItem(R.id.action_create).getActionView();
+        menu.findItem(R.id.tagSwitch).setVisible(false);
         isPersonTag = tagSwitch.isChecked();
+        tagValueField.setQueryHint("Tag Value...");
+        tagValueField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                try {
+                    currentPhoto.addTag(isPersonTag ? "person" : "location", query);
+                    Model.persist();
+                    updateTagsList(context);
+                } catch (Exception e) {
+                    PhotosLibrary.errorAlert(e, context);
+                }
+                menu.findItem(R.id.action_create).collapseActionView();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.action_create), new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                menu.findItem(R.id.tagSwitch).setVisible(true);
+                menu.findItem(R.id.previous).setVisible(false);
+                menu.findItem(R.id.next).setVisible(false);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                menu.findItem(R.id.previous).setVisible(true);
+                menu.findItem(R.id.next).setVisible(true);
+                menu.findItem(R.id.tagSwitch).setVisible(false);
+                return true;
+            }
+        });
+        tagSwitch.setText("Location");
         tagSwitch.setOnCheckedChangeListener((view, checked) -> {
             isPersonTag = checked;
             tagSwitch.setText(checked ? "Person" : "Location");
         });
-        tagValueField = (SearchView) menu.findItem(R.id.action_create).getActionView();
         return super.onCreateOptionsMenu(menu);
     }
 
