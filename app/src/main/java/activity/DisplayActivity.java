@@ -1,11 +1,11 @@
 package activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 
@@ -33,11 +33,10 @@ public class DisplayActivity extends AppCompatActivity {
     public Menu optionsMenu;
     public ImageView imageView;
     public static RecyclerView listOfTags;
-
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    public boolean isMoveTo;
     public Switch tagSwitch;
     public static Boolean isPersonTag;
-    public SearchView tagValueField;
+    public SearchView searchField;
     public Context context;
 
     @Override
@@ -54,9 +53,14 @@ public class DisplayActivity extends AppCompatActivity {
         updateDisplay();
         updateTagsList(this);
         context = this;
+        isMoveTo = false;
+        Button moveTo = (Button) findViewById(R.id.moveTo);
+        moveTo.setOnClickListener(view -> {
+            isMoveTo = true;
+            optionsMenu.findItem(R.id.action_create).expandActionView();
+        });
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.displaymenu, menu);
@@ -65,21 +69,32 @@ public class DisplayActivity extends AppCompatActivity {
         updatePrevNext();
 
         tagSwitch = (Switch) menu.findItem(R.id.tagSwitch).getActionView();
-        tagValueField = (SearchView) menu.findItem(R.id.action_create).getActionView();
+        searchField = (SearchView) menu.findItem(R.id.action_create).getActionView();
         menu.findItem(R.id.tagSwitch).setVisible(false);
         isPersonTag = tagSwitch.isChecked();
-        tagValueField.setQueryHint("Tag Value...");
-        tagValueField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchField.setQueryHint("Tag Value...");
+        searchField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                try {
-                    currentPhoto.addTag(isPersonTag ? "person" : "location", query);
-                    Model.persist();
-                    updateTagsList(context);
-                } catch (Exception e) {
-                    PhotosLibrary.errorAlert(e, context);
+                if (isMoveTo) {
+                    try {
+                        System.out.println(Model.currentUser.albums.get(Model.currentUser.albums.indexOf(new Album(query))));
+                        Model.currentUser.albums.get(Model.currentUser.albums.indexOf(new Album(query))).addPhoto(currentPhoto.path, currentPhoto.caption);
+                        currentAlbum.removePhoto(currentPhoto.path);
+                        Model.persist();
+                    } catch (Exception e) {
+                        PhotosLibrary.errorAlert(e, context);
+                    }
+                } else {
+                    try {
+                        currentPhoto.addTag(isPersonTag ? "person" : "location", query);
+                        Model.persist();
+                        updateTagsList(context);
+                    } catch (Exception e) {
+                        PhotosLibrary.errorAlert(e, context);
+                    }
+                    menu.findItem(R.id.action_create).collapseActionView();
                 }
-                menu.findItem(R.id.action_create).collapseActionView();
                 return false;
             }
 
@@ -91,9 +106,16 @@ public class DisplayActivity extends AppCompatActivity {
         MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.action_create), new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                menu.findItem(R.id.tagSwitch).setVisible(true);
                 menu.findItem(R.id.previous).setVisible(false);
                 menu.findItem(R.id.next).setVisible(false);
+                if (isMoveTo) {
+                    menu.findItem(R.id.tagSwitch).setVisible(false);
+                    searchField.setQueryHint("Move Photo To...");
+                }
+                else {
+                    menu.findItem(R.id.tagSwitch).setVisible(true);
+                    searchField.setQueryHint("Tag Value...");
+                }
                 return true;
             }
 
@@ -102,6 +124,7 @@ public class DisplayActivity extends AppCompatActivity {
                 menu.findItem(R.id.previous).setVisible(true);
                 menu.findItem(R.id.next).setVisible(true);
                 menu.findItem(R.id.tagSwitch).setVisible(false);
+                isMoveTo = false;
                 return true;
             }
         });
