@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,23 +10,27 @@ import android.widget.SearchView;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android10.R;
 
-import java.text.SimpleDateFormat;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
+import adapter.DisplayAdapter;
 import model.Album;
 import model.Model;
 import model.Photo;
 
 public class DisplayActivity extends AppCompatActivity {
+    public static DisplayAdapter adapter;
     public Album currentAlbum;
-    public Photo currentPhoto;
+    public static Photo currentPhoto;
     public int currentIndex;
     public Menu optionsMenu;
     public ImageView imageView;
+    public static RecyclerView listOfTags;
+
     public Switch tagSwitch;
     public static Boolean isPersonTag;
     public SearchView tagValueField;
@@ -38,8 +43,11 @@ public class DisplayActivity extends AppCompatActivity {
         currentAlbum = (Album) Model.dataTransfer.get(0);
         currentPhoto = (Photo) Model.dataTransfer.get(1);
         currentIndex = currentAlbum.photos.indexOf(currentPhoto);
+        listOfTags = findViewById(R.id.listOfTags);
+        listOfTags.setAdapter(adapter);
+        listOfTags.setLayoutManager(new LinearLayoutManager(this));
         updateDisplay();
-        updateTagsList();
+        updateTagsList(this);
     }
 
     @Override
@@ -70,13 +78,13 @@ public class DisplayActivity extends AppCompatActivity {
             currentPhoto = currentAlbum.photos.get(currentIndex);
             updatePrevNext();
             updateDisplay();
-            updateTagsList();
+            updateTagsList(this);
         } else if (id == R.id.next) {
             currentIndex++;
             currentPhoto = currentAlbum.photos.get(currentIndex);
             updatePrevNext();
             updateDisplay();
-            updateTagsList();
+            updateTagsList(this);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -94,8 +102,10 @@ public class DisplayActivity extends AppCompatActivity {
         imageView.setImageURI(Uri.parse(currentPhoto.path));
     }
 
-    public void updateTagsList() {
-//        this.tagsList.setItems(FXCollections.observableList(currentPhoto.tags.stream().map(t -> t.type+"="+t.value).collect(Collectors.toList())));
+    public static void updateTagsList(Context context) {
+        adapter = new DisplayAdapter(currentPhoto.tags);
+        listOfTags.setAdapter(adapter);
+        listOfTags.setLayoutManager(new LinearLayoutManager(context));
     }
 }
 
