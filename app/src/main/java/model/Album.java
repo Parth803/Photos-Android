@@ -164,5 +164,7 @@ public final class Album implements java.io.Serializable, Comparable<Album> {
         Photo photo = Model.currentUser.uniquePhotos.get(path);
         if (photo.dateTaken.compareTo(this.start) == 0) this.start = Collections.min(this.photos).dateTaken;
         if (photo.dateTaken.compareTo(this.end) == 0) this.end = Collections.max(this.photos).dateTaken;
+        Model.currentUser.uniquePhotos.remove(path);
     }
 }
+
