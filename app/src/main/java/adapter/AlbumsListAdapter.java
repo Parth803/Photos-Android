@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,13 +79,22 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
                 }
                 return true;
             } else if (item.getItemId() == R.id.delete) {
-                try {
-                    Model.currentUser.deleteAlbum(albumName);
-                    Model.persist();
-                    AlbumsListActivity.refresh(view.getContext());
-                } catch (Exception e) {
-                    PhotosLibrary.errorAlert(e, view.getContext());
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setCancelable(true);
+                builder.setTitle("Are your sure you want to delete this album?");
+                builder.setPositiveButton("Yes", (dialog, which) -> {
+                    try {
+                        Model.currentUser.deleteAlbum(albumName);
+                        Model.persist();
+                        AlbumsListActivity.refresh(view.getContext());
+                    } catch (Exception e) {
+                        PhotosLibrary.errorAlert(e, view.getContext());
+                    }
+                });
+                builder.setNegativeButton("No", (dialog, which) -> {dialog.cancel();dialog.dismiss();});
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
                 return true;
             }
             return false;
