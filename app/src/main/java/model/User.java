@@ -139,7 +139,11 @@ public final class User implements java.io.Serializable, Comparable<User> {
         if (!this.albums.contains(new Album(name))) {
             throw new Exception("Album Not Found");
         }
+        Album album = this.albums.get(this.albums.indexOf(new Album(name)));
         this.albums.remove(new Album(name));
+        for (Photo photo: album.photos) {
+            Model.currentUser.uniquePhotos.remove(photo.path);
+        }
     }
 
     /**
