@@ -11,4 +11,5 @@
     <string name="upload_photo">Upload Photo</string>
     <string name="tags">Tags:</string>
     <string name="tagtype_tagvalue">tagType: TagValue</string>
+    <string name="move_to">Move To</string>
 </resources>
