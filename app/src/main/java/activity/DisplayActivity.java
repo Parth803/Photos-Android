@@ -1,8 +1,10 @@
 package activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +23,7 @@ public class DisplayActivity extends AppCompatActivity {
     public Photo currentPhoto;
     public int currentIndex;
     public Menu optionsMenu;
-
+    public ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,8 @@ public class DisplayActivity extends AppCompatActivity {
         currentAlbum = (Album) Model.dataTransfer.get(0);
         currentPhoto = (Photo) Model.dataTransfer.get(1);
         currentIndex = currentAlbum.photos.indexOf(currentPhoto);
+        updateDisplay();
+        updateTagsList();
     }
 
     @Override
@@ -38,8 +42,7 @@ public class DisplayActivity extends AppCompatActivity {
         optionsMenu = menu;
         this.setTitle((currentIndex + 1) + " of " + currentAlbum.photos.size());
         updatePrevNext();
-        updateDisplay();
-        updateTagsList();
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -74,7 +77,8 @@ public class DisplayActivity extends AppCompatActivity {
 
     public void updateDisplay() {
         this.setTitle((currentIndex + 1) + " of " + currentAlbum.photos.size());
-//        if (!currentPhoto.path.isEmpty()) displayImage.setImage(new Image("file:" + currentPhoto.path));
+        imageView = this.findViewById(R.id.imageView);
+        imageView.setImageURI(Uri.parse(currentPhoto.path));
     }
 
     public void updateTagsList() {
