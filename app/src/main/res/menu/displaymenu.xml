@@ -13,4 +13,20 @@
         android:title="@string/next"
         app:showAsAction="always"
         android:icon="@android:drawable/ic_media_next" />
+
+    <item
+        android:id="@+id/action_create"
+        android:title="addTag"
+        android:icon="@android:drawable/ic_menu_add"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:id="@+id/tagSwitch"
+        android:title="locationPersonSwitch"
+        android:textOff="Location Tag"
+        android:textOn="Person Tag"
+        android:showText="true"
+        app:actionViewClass="android.widget.Switch"
+        app:showAsAction="always" />
 </menu>

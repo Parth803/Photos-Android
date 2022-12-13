@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,6 +44,10 @@ public class DisplayActivity extends AppCompatActivity {
         this.setTitle((currentIndex + 1) + " of " + currentAlbum.photos.size());
         updatePrevNext();
 
+        Switch simpleSwitch = findViewById(R.id.tagSwitch); // initiate Switch
+        simpleSwitch.setTextOff("1");
+        simpleSwitch.setTextOn("2");
+        simpleSwitch.setShowText(true);
         return super.onCreateOptionsMenu(menu);
     }
 
