@@ -69,7 +69,7 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumsListAdapter.Vi
                     MenuItem menuItem = AlbumsListActivity.optionsMenu.findItem(R.id.action_create);
                     searchView = (SearchView) menuItem.getActionView();
                     AlbumsListActivity.optionsMenu.findItem(R.id.search_button).setVisible(false);
-                    searchView.setQueryHint("Rename " + albumName + "...");
+                    searchView.setQueryHint("Rename \"" + albumName + "\" to...");
                     AlbumsListActivity.isRename = true;
                     AlbumsListActivity.oldAlbumName = albumName;
                     menuItem.expandActionView();

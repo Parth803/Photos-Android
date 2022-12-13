@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.android10.PhotosLibrary;
 import com.example.android10.R;
@@ -53,13 +55,22 @@ public class PhotosListAdapter extends ArrayAdapter<Photo> {
 
     public void displayEditPhoto(Context context, Photo selectedPhoto) {
         if (PhotosListActivity.deleteMode) {
-            try {
-                album.removePhoto(selectedPhoto.path);
-                Model.persist();
-                updateActivities(context);
-            } catch (Exception e) {
-                PhotosLibrary.errorAlert(e, context);
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            builder.setTitle("Are your sure you want to delete this photo?");
+            builder.setPositiveButton("Yes", (dialog, which) -> {
+                try {
+                    album.removePhoto(selectedPhoto.path);
+                    Model.persist();
+                    updateActivities(context);
+                } catch (Exception e) {
+                    PhotosLibrary.errorAlert(e, context);
+                }
+            });
+            builder.setNegativeButton("No", (dialog, which) -> {dialog.cancel();dialog.dismiss();});
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         } else {
             Model.initNextScene(true);
             Model.dataTransfer.add(album);
