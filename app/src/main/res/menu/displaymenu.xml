@@ -24,8 +24,6 @@
     <item
         android:id="@+id/tagSwitch"
         android:title="locationPersonSwitch"
-        android:textOff="Location Tag"
-        android:textOn="Person Tag"
         android:showText="true"
         app:actionViewClass="android.widget.Switch"
         app:showAsAction="always" />

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,10 @@ public class DisplayActivity extends AppCompatActivity {
     public int currentIndex;
     public Menu optionsMenu;
     public ImageView imageView;
+    public Switch tagSwitch;
+    public static Boolean isPersonTag;
+    public SearchView tagValueField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +49,13 @@ public class DisplayActivity extends AppCompatActivity {
         this.setTitle((currentIndex + 1) + " of " + currentAlbum.photos.size());
         updatePrevNext();
 
-        Switch simpleSwitch = findViewById(R.id.tagSwitch); // initiate Switch
-        simpleSwitch.setTextOff("1");
-        simpleSwitch.setTextOn("2");
-        simpleSwitch.setShowText(true);
+        tagSwitch = (Switch) menu.findItem(R.id.tagSwitch).getActionView();
+        isPersonTag = tagSwitch.isChecked();
+        tagSwitch.setOnCheckedChangeListener((view, checked) -> {
+            isPersonTag = checked;
+            tagSwitch.setText(checked ? "Person" : "Location");
+        });
+        tagValueField = (SearchView) menu.findItem(R.id.action_create).getActionView();
         return super.onCreateOptionsMenu(menu);
     }
 
