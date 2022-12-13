@@ -6,4 +6,6 @@
     <string name="display_mode">Display Mode</string>
     <string name="rename">Rename</string>
     <string name="create">Create</string>
+    <string name="next">next</string>
+    <string name="previous">previous</string>
 </resources>
