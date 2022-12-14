@@ -23,13 +23,13 @@ import model.Model;
 
 public class PhotosListActivity extends AppCompatActivity {
 
-    public GridView albumPhotos;
+    public static GridView albumPhotos;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch displayDeleteSwitch;
     public static Boolean deleteMode;
     public static Album currentAlbum;
-    public PhotosListAdapter adapter;
-    Context context;
+    public static PhotosListAdapter adapter;
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class PhotosListActivity extends AppCompatActivity {
         }
     }
 
-    public void updateActivity() {
+    public static void updateActivity() {
         adapter = new PhotosListAdapter(context, currentAlbum.photos);
         adapter.album = currentAlbum;
         adapter.gridview = albumPhotos;

@@ -78,12 +78,24 @@ public class DisplayActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 if (isMoveTo) {
                     try {
-                        System.out.println(Model.currentUser.albums.get(Model.currentUser.albums.indexOf(new Album(query))));
-                        Model.currentUser.albums.get(Model.currentUser.albums.indexOf(new Album(query))).addPhoto(currentPhoto.path, currentPhoto.caption);
                         currentAlbum.removePhoto(currentPhoto.path);
+                        Model.currentUser.albums.get(Model.currentUser.albums.indexOf(new Album(query))).addPhoto(currentPhoto.path);
                         Model.persist();
+                        Model.initPreviousScene();
+                        PhotosListActivity.updateActivity();
+                        finish();
                     } catch (Exception e) {
-                        PhotosLibrary.errorAlert(e, context);
+                        optionsMenu.findItem(R.id.action_create).collapseActionView();
+                        if (!(e instanceof IndexOutOfBoundsException)) {
+                            PhotosLibrary.errorAlert(e, context);
+                        } else {
+                            PhotosLibrary.errorAlert(new Exception("album does not exist"), context);
+                        }
+                        try {
+                            currentAlbum.addPhoto(currentPhoto.path);
+                        } catch (Exception ex) {
+                            PhotosLibrary.errorAlert(e, context);
+                        }
                     }
                 } else {
                     try {
