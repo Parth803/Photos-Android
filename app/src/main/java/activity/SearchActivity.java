@@ -48,7 +48,7 @@ public class SearchActivity extends AppCompatActivity {
                 ArrayList<Photo> filteredPhotos = new ArrayList<>();
                 if (searchQuery.isEmpty()) {
                     filteredPhotos = Model.currentUser.getAllPhotos();
-                } else if (searchQuery.matches("([\\S]+)=([\\S ]+)")) {
+                } else if (searchQuery.matches("([\\S]+)=(\\S+)")) {
                     Pattern p = Pattern.compile("([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
@@ -89,7 +89,7 @@ public class SearchActivity extends AppCompatActivity {
                 ArrayList<Photo> filteredPhotos = new ArrayList<>();
                 if (searchQuery.isEmpty()) {
                     filteredPhotos = Model.currentUser.getAllPhotos();
-                } else if (searchQuery.matches("([\\S]+)=([\\S ]+)")) {
+                } else if (searchQuery.matches("([\\S]+)=(\\S+)")) {
                     Pattern p = Pattern.compile("([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
@@ -99,8 +99,8 @@ public class SearchActivity extends AppCompatActivity {
                             throw new RuntimeException("Error parsing searchQuery for a tag");
                         }
                     }
-                } else if (searchQuery.matches("([\\S]+)=([\\S ]+) AND ([\\S]+)=([\\S ]+)")) {
-                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) AND ([\\S]+)=([\\S ]+)");
+                } else if (searchQuery.matches("([\\S]+)=([\\S ]+) AND ([\\S ]+)=([\\S ]+)")) {
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) AND ([\\S ]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
@@ -110,7 +110,7 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 } else if (searchQuery.matches("([\\S]+)=([\\S ]+) OR ([\\S]+)=([\\S ]+)")) {
-                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) OR([\\S]+)=([\\S ]+)");
+                    Pattern p = Pattern.compile("([\\S]+)=([\\S ]+) OR ([\\S]+)=([\\S ]+)");
                     Matcher m = p.matcher(searchQuery);
                     if (m.find()) {
                         try {
