@@ -122,7 +122,7 @@ public class DisplayActivity extends AppCompatActivity {
                 menu.findItem(R.id.next).setVisible(false);
                 if (isMoveTo) {
                     menu.findItem(R.id.tagSwitch).setVisible(false);
-                    searchField.setQueryHint("Move Photo To...");
+                    searchField.setQueryHint("Destination Album...");
                 }
                 else {
                     menu.findItem(R.id.tagSwitch).setVisible(true);
