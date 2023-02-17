@@ -29,3 +29,4 @@ First, clone the repo:
 Important Notes
 
         Photos Application Requirements: https://www.cs.rutgers.edu/courses/213/classes/fall_2022_venugopal/android/android.html
+ 
